@@ -1,7 +1,0 @@
-Project Name: NFL Picks
-
-Project Concept:
-The NFL season lasts 17 weeks, with 30 teams. Our project will be a website that hosts user-made pools, in which users may use on site (read ‘fake’) credits. In this pool, each user who has bought into the pool will choose one team every week that they have not yet chosen. Once they choose this team, they may not choose the team again for the rest of that season for that pool. If that team wins, that user scores as many points as that football team scored for that game that week. If the team the user chose loses, that user scores 0 points. Every week, the points cumulate into one score per user in the pool, and the user with the most points wins the pool. The total credits used to create the pool (each user’s buy-in) will be divided up fairly between the first three places (top 3 scoring users). 
-A lot of the project will be back-end data storing and front-end user interface. We will aim to pull data from NFL’s website through XML or JSON data feeds. A struggle our group will come across during the semester is the fact that the NFL season is over and will not resume in time for proper testing, but we will have proper simulations to cover this struggle as best as possible. 
-
-Developers: Sean Monahan, Lou Dignam, Colin Deckert
