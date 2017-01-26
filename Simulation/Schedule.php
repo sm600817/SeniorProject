@@ -37,18 +37,18 @@
 			}
 
 
-			function simGame(gameId, awayId, homeId){
-				var btnStr = "btn" + gameId;
+			function simGame(game, awayId, homeId){
+				var btnStr = "btn" + game;
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange=function(){
 					if (xhttp.readyState==4 && xhttp.status==200){
 						var data = xhttp.responseText;
-						document.getElementById(gameId).innerHTML = data;
+						document.getElementById(game).innerHTML = data;
 						document.getElementById(btnStr).disabled = true;
 					}
 				}//end onreadystatechange
 				
-				var link = "simulate.php?awayId=" + awayId + "&homeId=" + homeId;
+				var link = "simulate.php?game=" + game + "&awayId=" + awayId + "&homeId=" + homeId;
 
 				xhttp.open("GET", link, true);
 				xhttp.send();
@@ -60,8 +60,11 @@
 		<br>
 		Week <select name="weekSelect" id="weekSelect">
 				<option value="none">Select Week...</option>
-  				<option value="1">1</option>
-  				<option value="2">2</option>
+				<?php
+				for($i = 1; $i < 18; $i++){
+					echo "<option value='$i'>$i</option>";
+				}
+				?>
 			 </select>
 		<button id="simBtn" onclick="simulate()">Simulate </button>
 		<br><br>

@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "projectTest";
+$database = "nfl_picks";
 
 // Create connection_aborted(oid)	
 $conn = new mysqli($servername, $username, $password, $database);

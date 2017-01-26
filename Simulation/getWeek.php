@@ -6,9 +6,10 @@ if(!empty($_POST["week"])){
 
 	include 'DBConnect.php';
 
-	$sql = "SELECT Week, Game1, Game2
-				FROM week
-				WHERE Week = '" . $week . "'";
+	$sql = "SELECT week_id, game1, game2, game3, game4, game5, game6, game7, game8,
+					game9, game10, game11, game12, game13, game14, game15, game16
+				FROM weeks
+				WHERE week_id = '" . $week . "'";
 
 	//this is where your SQL Statement runs
 	$result = mysqli_query($conn, $sql);
@@ -18,43 +19,60 @@ if(!empty($_POST["week"])){
 		$week_row = mysqli_fetch_assoc($result);
 
 		while($game < 3){
-			$gameStr = "Game" . $game;
+			$gameStr = "game" . $game;
 
-			$sql = "SELECT HomeTeam, AwayTeam
-					FROM game
-					WHERE gameId = " . $week_row[$gameStr];
+			$sql = "SELECT home_team, away_team, home_score, away_score
+					FROM games
+					WHERE game_id = " . $week_row[$gameStr];
 
 			$result = mysqli_query($conn, $sql);
 
 			if (mysqli_num_rows($result) > 0) {
 				$game_row = mysqli_fetch_assoc($result);
 
-				$sql = "SELECT teamId, Name
-					FROM team
-					WHERE teamId = " . $game_row["AwayTeam"];
+				$homeScore = $game_row["home_score"];
+				$awayScore = $game_row["away_score"];
+
+				$sql = "SELECT team_num, team_name
+					FROM teams
+					WHERE team_num = " . $game_row["away_team"];
 				$result = mysqli_query($conn, $sql);
 
 				if (mysqli_num_rows($result) > 0) {
 					$team_row = mysqli_fetch_assoc($result);
 
-					$awayTeam = $team_row["Name"];
-					$awayId = $team_row["teamId"];
+					$awayTeam = $team_row["team_name"];
+					$awayId = $team_row["team_num"];
 				}
 
-				$sql = "SELECT teamId, Name
-					FROM team
-					WHERE teamId = " . $game_row["HomeTeam"];
+				$sql = "SELECT team_num, team_name
+					FROM teams
+					WHERE team_num = " . $game_row["home_team"];
 				$result = mysqli_query($conn, $sql);
 
 				if (mysqli_num_rows($result) > 0) {
 					$team_row = mysqli_fetch_assoc($result);
 
-					$homeTeam = $team_row["Name"];
-					$homeId = $team_row["teamId"];
+					$homeTeam = $team_row["team_name"];
+					$homeId = $team_row["team_num"];
 				}
 			}
-			echo "<p id='". $game . "''>" . $awayTeam . " at " . $homeTeam . "</p>";
-			echo "<button style='visibility:hidden' id='btn". $game . "'' type='button' onclick='simGame(". $game . "," . $awayId . ",". $homeId.")'>Simulate</button>";
+			if($homeScore > 0 || $awayScore > 0){
+				if($homeScore > $awayScore){
+					echo '<p>' . $homeTeam . ' ' . $homeScore . ' - ' .
+						$awayTeam . ' ' . $awayScore . '</p>';
+					echo '<br>';
+				}
+				else {
+					echo '<p>' . $awayTeam . ' ' . $awayScore . ' - ' .
+						$homeTeam . ' ' . $homeScore . '</p>';
+					echo '<br>';
+				}
+			}
+			else{
+				echo "<p id='". $week_row[$gameStr] . "''>" . $awayTeam . " at " . $homeTeam . "</p>";
+				echo "<button style='visibility:hidden' id='btn". $week_row[$gameStr] . "'' type='button' onclick='simGame(". $week_row[$gameStr] . "," . $awayId . ",". $homeId.")'>Simulate</button>";
+			}
 			$game++;
 		}
 
