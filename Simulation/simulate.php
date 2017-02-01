@@ -1,6 +1,6 @@
 <?php
 
-include 'DBConnect.php';
+include __DIR__ . '/../DBConnect.php';
 
 $gameId = $_GET["game"];
 $awayId = $_GET["awayId"];
