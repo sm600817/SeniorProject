@@ -1,3 +1,5 @@
+
+</div>
 <style type="text/css">
     /* Sticky footer styles
 -------------------------------------------------- */
@@ -27,17 +29,20 @@
         padding: 60px 15px 0;
     }
     .container .text-muted {
-        margin: 20px 0;
+        margin-top: 20px;
+        margin-left: 0;
     }
 
     .footer > .container {
-        padding-right: 15px;
-        padding-left: 15px;
+        padding-right: 0;
+        padding-left: 0;
     }
 
     code {
         font-size: 80%;
     }
+
+
 </style>
 <footer class="footer">
     <div class="container">
@@ -49,4 +54,5 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
+</body>
 </html>
