@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<?php
+
+    include __DIR__ . '/../DBConnect.php';
+    session_start();
+
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -23,17 +29,22 @@
             </div>
             <?php if($title != "Log In"): ?>
             <ul class="nav navbar-nav">
-                <li><a href="Home.php">Home</a></li>
+                <li <?php if($page = 'Home') echo 'class = active'; ?>><a href="Home.php">Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <?php echo '<img WIDTH="18" src="data:image/jpeg;base64,' . base64_encode( $_SESSION['prof_pic'] ) . '" />';
+                              echo '<span style="margin-left: 55;">' . $_SESSION['nickname'] . '</span>'; ?>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="">Profile</a></li>
+                        <li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    </ul>
+                </li>
             </ul>
             <?php endif; ?>
         </div>
     </nav>
     <div class="container" style="margin-top: 1em">
-
-<?php
-
-include __DIR__ . '/../DBConnect.php';
-
-
-
-?>
