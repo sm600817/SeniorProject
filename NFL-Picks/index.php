@@ -26,7 +26,7 @@ include 'header.php';
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-sm-offset-3">
-											<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Log In">
+											<input type="submit" name="login-submit" id="login-submit" tabindex="3" class="form-control btn btn-primary" value="Log In">
 										</div>
 									</div>
 								</div>
@@ -62,25 +62,25 @@ include 'header.php';
 										<input type="text" name="first_name" id="first_name" tabindex="1" class="form-control" placeholder="First Name" value="" required>
 									</div>
 									<div class="form-group col-xs-6">
-										<input type="text" name="last_name" id="last_name" tabindex="1" class="form-control" placeholder="Last Name" value="" required>
+										<input type="text" name="last_name" id="last_name" tabindex="2" class="form-control" placeholder="Last Name" value="" required>
 									</div>
 								</div>
 								<div class="form-group">
-									<input type="text" name="nickname" id="nickname" tabindex="1" class="form-control" placeholder="Nickname (ex. jSchmoe123)" value="" required>
+									<input type="text" name="nickname" id="nickname" tabindex="3" class="form-control" placeholder="Nickname (ex. jSchmoe123)" value="" required>
 								</div>
 								<div class="form-group">
 									<input type="hidden" name="MAX_FILE_SIZE" value="2000000">
-									<input type="file" name="pic" id="pic" tabindex="2" 
+									<input type="file" name="pic" id="pic" tabindex="4" accept=".png, .jpeg, .gif, .jpg" 
 										class="form-control filestyle" data-buttonBefore="true" data-buttonText="Profile Picture" 
 										data-buttonName="btn-primary" required>
 								</div>
 								<div class="form-group">
-									<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" 
+									<input type="email" name="email" id="email" tabindex="5" class="form-control" placeholder="Email Address" 
 										data-error="Invalid email address" value="" required>
 									<div class="help-block with-errors"></div>
 								</div>
 								<div class="form-group">
-									<input type="password" name="password" id="password" tabindex="2" class="form-control" 
+									<input type="password" name="password" id="password" tabindex="6" class="form-control" 
 										placeholder="Password" data-minlength="8" 
 										data-error="Minimum 8 characters" required>
 									<div class="help-block with-errors"></div>
@@ -88,7 +88,7 @@ include 'header.php';
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-sm-offset-3">
-											<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-primary" value="Register Now">
+											<input type="submit" name="register-submit" id="register-submit" tabindex="7" class="form-control btn btn-primary" value="Register Now">
 										</div>
 									</div>
 								</div>
