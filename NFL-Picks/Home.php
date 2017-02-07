@@ -25,8 +25,6 @@ include 'header.php';
     </style>
 
     <h1 id="projectName" class="projectName">NFL-Picks</h1>
-
-    <button id="rightMenuHideShow" class="rightMenuHideShow"></button>
     
     <div id="leftInfo" class="leftInfo">
         
