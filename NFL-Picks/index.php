@@ -36,7 +36,7 @@ include 'header.php';
 								$email = $_POST["email"];
 								$password = $_POST["password"];
 
-								$sql = "SELECT first_name, last_name, nickname, prof_pic
+								$sql = "SELECT email, first_name, last_name, nickname, prof_pic
 											FROM users
 											WHERE email = '$email' AND password = '$password'";
 
@@ -44,7 +44,8 @@ include 'header.php';
 
 								if (mysqli_num_rows($result) > 0){
 									$row = mysqli_fetch_assoc($result);
-									$_SESSION["custName"] = $row["first_name"] . " " . $row["last_name"];
+									$_SESSION["email"] = $row["email"];
+									$_SESSION["name"] = $row["first_name"] . " " . $row["last_name"];
 									$_SESSION["nickname"] = $row["nickname"];
 									$_SESSION["prof_pic"] = $row["prof_pic"];
 									header("Location: Home.php");
@@ -72,7 +73,7 @@ include 'header.php';
 									<input type="hidden" name="MAX_FILE_SIZE" value="2000000">
 									<input type="file" name="pic" id="pic" tabindex="4" accept=".png, .jpeg, .gif, .jpg" 
 										class="form-control filestyle" data-buttonBefore="true" data-buttonText="Profile Picture" 
-										data-buttonName="btn-primary" required>
+										data-buttonName="btn-info" required>
 								</div>
 								<div class="form-group">
 									<input type="email" name="email" id="email" tabindex="5" class="form-control" placeholder="Email Address" 

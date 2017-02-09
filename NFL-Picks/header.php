@@ -2,6 +2,9 @@
 <?php
 
     include __DIR__ . '/../DBConnect.php';
+
+    ob_start();
+
     session_start();
 
 ?>
@@ -29,12 +32,21 @@
             </div>
             <?php if($title != "Log In"): ?>
             <ul class="nav navbar-nav">
-                <li <?php if($page = 'Home') echo 'class = active'; ?>><a href="Home.php">Home</a></li>
+                <li <?php if($page == 'Home') echo 'class = active'; ?>><a href="Home.php">Home</a></li>
+                <li <?php if($page == 'Pools') echo 'class = active ';?>dropdown>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pools
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="my_pools.php">My Pools</a></li>
+                        <li><a href="create_pool.php">Create Pool</a></li>
+                    </ul>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="<?php if($page = 'Profile') echo 'active';?>dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <?php echo '<img WIDTH="18" src="data:image/jpeg;base64,' . base64_encode( $_SESSION['prof_pic'] ) . '" />';
+                        <?php echo '<img hspace="5" WIDTH="18" src="data:image/jpeg;base64,' . base64_encode( $_SESSION['prof_pic'] ) . '" />';
                               echo '<span style="margin-left: 55;">' . $_SESSION['nickname'] . '</span>'; ?>
                         <span class="caret"></span>
                     </a>
