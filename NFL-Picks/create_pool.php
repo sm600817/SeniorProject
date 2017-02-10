@@ -57,7 +57,10 @@ include 'header.php';
 			header("Location: my_pools.php");
 		}
 		else {
-			echo "<h4 class='text-center'><span class='label label-danger'>" . mysqli_error($conn) . "</span></h4>";
+			echo "<div class='alert alert-danger alert-dismissible'>
+		            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+		            <strong>Error!</strong>" . mysqli_error($conn) . 
+		         "</div>";
 		}
 
 

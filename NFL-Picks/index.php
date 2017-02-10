@@ -51,7 +51,10 @@ include 'header.php';
 									header("Location: Home.php");
 								}
 								else{
-									echo "<h4 class='text-center'><span class='label label-danger'>Incorrect email or password.</span></h4>";
+									echo "<div class='alert alert-danger alert-dismissible'>
+								            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+								            <strong>Sorry!</strong> Incorrect email or password
+								         </div>";
 								}
 							}
 							?>
@@ -98,34 +101,40 @@ include 'header.php';
 					</div>
 				</div>
 			</div>
+			<?php
+				if(isset($_POST["register-submit"]) && $_FILES['pic']['size'] > 0){
+					$first_name = $_POST["first_name"];
+					$last_name = $_POST["last_name"];
+					$nickname = $_POST["nickname"];
+					$email = $_POST["email"];
+					$password = $_POST["password"];
+
+					$tmpName  = $_FILES['pic']['tmp_name'];
+
+					$fp      = fopen($tmpName, 'r');
+					$content = fread($fp, filesize($tmpName));
+					$content = addslashes($content);
+					fclose($fp);
+
+					$sql = "INSERT INTO users(first_name, last_name, nickname, email, prof_pic, password, credits) 
+							VALUES ('$first_name', '$last_name', '$nickname', '$email', '$content', '$password', 100)";
+					if(mysqli_query($conn, $sql)){
+						echo "<div class='alert alert-success alert-dismissible'>
+					            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+					            <strong>Registration Successful!</strong> Please log in
+					         </div>";
+					}
+					else {
+						echo "<div class='alert alert-success alert-dismissible'>
+					            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+					            <strong>Sorry!</strong> There was a problem. Please try again
+					          </div>";
+					}
+
+
+				}
+			?>
 		</div>
 	</div>
-	<?php
-		if(isset($_POST["register-submit"]) && $_FILES['pic']['size'] > 0){
-			$first_name = $_POST["first_name"];
-			$last_name = $_POST["last_name"];
-			$nickname = $_POST["nickname"];
-			$email = $_POST["email"];
-			$password = $_POST["password"];
-
-			$tmpName  = $_FILES['pic']['tmp_name'];
-
-			$fp      = fopen($tmpName, 'r');
-			$content = fread($fp, filesize($tmpName));
-			$content = addslashes($content);
-			fclose($fp);
-
-			$sql = "INSERT INTO users(first_name, last_name, nickname, email, prof_pic, password, credits) 
-					VALUES ('$first_name', '$last_name', '$nickname', '$email', '$content', '$password', 100)";
-			if(mysqli_query($conn, $sql)){
-				echo "<h4 class='text-center'><span class='label label-success'>Registration successful. Pleas log in.</span></h4>";
-			}
-			else {
-				echo "<h4 class='text-center'><span class='label label-danger'>Sorry there was a problem. Please try again.</span></h4>";
-			}
-
-
-		}
-	?>
 			
 <?php include "footer.php"; ?>
