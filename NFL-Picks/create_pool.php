@@ -50,6 +50,10 @@ include 'header.php';
 				VALUES ('$manager', '$pool_name', '$content', '$buy_in', '$buy_in')";
 
 		if(mysqli_query($conn, $sql)){
+			$lastId = mysqli_insert_id($conn);
+			$sql = "INSERT INTO picks(pool_id, user) 
+				VALUES ($lastId, '$manager')";
+			mysqli_query($conn, $sql);
 			header("Location: my_pools.php");
 		}
 		else {

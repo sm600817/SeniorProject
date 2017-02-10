@@ -42,6 +42,13 @@
         font-size: 80%;
     }
 
+    .badge-notification {
+      background-color: #b94a48;
+    }
+    .badge-notification:hover {
+      background-color: #953b39;
+    }
+
 
 </style>
 <footer class="footer">

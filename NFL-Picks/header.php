@@ -7,6 +7,16 @@
 
     session_start();
 
+    $user  = $_SESSION['email'];
+
+    $sql = "SELECT COUNT(invite_id) AS count
+            FROM invites
+            WHERE recipient_id = '$user' AND was_read = 0";
+
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $unread = $row["count"];
+
 ?>
 <html lang="en">
 <head>
@@ -44,14 +54,29 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="<?php if($page = 'Profile') echo 'active';?>dropdown">
+                <li <?php if($page == 'Profile') echo 'class = active ';?>dropdown>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <?php echo '<img hspace="5" WIDTH="18" src="data:image/jpeg;base64,' . base64_encode( $_SESSION['prof_pic'] ) . '" />';
-                              echo '<span style="margin-left: 55;">' . $_SESSION['nickname'] . '</span>'; ?>
+                              echo '<span style="margin-left: 55;">' . $_SESSION['nickname'] . '</span>';
+                              if($unread > 0 && $title != 'Invites'){
+                                echo '<span style="margin-left: 5px" class="badge badge-notification">' . 
+                                        $unread . '</span>'; 
+                              }
+                        ?>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="">Profile</a></li>
+                        <li>
+                            <a href="invites_view.php">
+                                Invites
+                                <?php if($unread > 0 && $title != 'Invites'){ ?>
+                                    <span style="margin-left: 5px;" class="badge badge-notification"> 
+                                        <?php echo $unread; ?>
+                                    </span>
+                                <?php } ?>
+                            </a> 
+                        </li>
                         <li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                     </ul>
                 </li>

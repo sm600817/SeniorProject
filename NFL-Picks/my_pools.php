@@ -5,9 +5,7 @@ include 'header.php';
 ?>
 <?php
 
-$user  = $_SESSION['email'];
-
-$sql = "SELECT pool_name, pool_image, buy_in, total_pot
+$sql = "SELECT pool_id, pool_name, pool_image, buy_in, total_pot
 		FROM pools
 		WHERE manager = '$user'";
 
@@ -30,7 +28,8 @@ $result = mysqli_query($conn, $sql);
             <?php
             	while($row = mysqli_fetch_assoc($result)) {
             		echo "<tr>";
-    				echo "<td><img hspace='5' WIDTH='30' src='data:image/jpeg;base64," . base64_encode( $row["pool_image"] ) . "'/>" . $row["pool_name"] . "</td>";
+    				echo "<td><img hspace='5' WIDTH='30' src='data:image/jpeg;base64," . base64_encode( $row["pool_image"] ) . 
+    						"'/><a href='pool_view.php?pool=" . $row["pool_id"] . "'>" . $row["pool_name"] . "</a></td>";
     				echo "<td>" . $row["buy_in"] . "</td>";
     				echo "<td>" . $row["total_pot"] . "</td>";
     				echo "</tr>";
