@@ -77,7 +77,7 @@ $result = mysqli_query($conn, $sql);
             <thead>
             <tr>
                 <th>Member</th>
-                <th>Total Score</th>
+                <th>Points</th>
             </tr>
             </thead>
             <tbody>

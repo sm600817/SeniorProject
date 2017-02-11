@@ -10,7 +10,7 @@ $sql = "UPDATE invites
 		WHERE recipient_id = '$user'";
 mysqli_query($conn, $sql);
 
-$sql = "SELECT manager_id, pool_id, was_read
+$sql = "SELECT invite_id, manager_id, pool_id, was_read
 		FROM invites
 		WHERE recipient_id = '$user'";
 
@@ -33,6 +33,7 @@ $result = mysqli_query($conn, $sql);
             <tbody>
             <?php
             	while($row = mysqli_fetch_assoc($result)) {
+            		$invite = $row['invite_id'];
             		$manager = $row['manager_id'];
             		$poolId = $row['pool_id'];
 
@@ -55,7 +56,12 @@ $result = mysqli_query($conn, $sql);
     				echo "<td><img hspace='5' WIDTH='30' src='data:image/jpeg;base64," . base64_encode( $poolImg ) . 
     						"'/><a href='pool_view.php?pool=" . $poolId . "'>" . $poolName . "</a></td>";
     				echo "<td>" . $mgrNickname . "</td>";
-    				echo "</tr>";
+    				echo "<td>
+    						<span id='$invite'>
+    							<button class='btn btn-success btn-sm' onclick='accept($invite)'>Accept</button>
+								<button class='btn btn-danger btn-sm' onclick='decline($invite)'>Decline</button>
+							</span>
+						  </td>";
     			}
             ?>
         	</tbody>
@@ -68,4 +74,31 @@ $result = mysqli_query($conn, $sql);
         <?php } ?>
 	</div>
 </div>
+<script type="text/javascript">
+
+	function accept(inviteId) {
+
+        $.ajax({
+		   type: "POST",
+		   data: {invite: inviteId},
+		   url: "accept_invite.php",
+		   success: function(msg){
+		   	 $('#' + inviteId).html(msg);
+		   }
+		});
+    }
+
+    function decline(inviteId) {
+
+        $.ajax({
+		   type: "POST",
+		   data: {invite: inviteId},
+		   url: "decline_invite.php",
+		   success: function(msg){
+		   	 $('#' + inviteId).html(msg);
+		   }
+		});
+    }
+
+</script>
 <?php include "footer.php"; ?>
