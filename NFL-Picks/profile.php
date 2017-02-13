@@ -8,10 +8,16 @@ include 'header.php';
 
 
 <?php
-    if(isset($_POST["register-submit"]) && $_FILES['pic']['size'] > 0){
-        $sql = "SELECT first_name, last_name, email, nickname
-                FROM users";
-        $userResult = mysqli_query($conn, $sql);
+    $sql = "SELECT first_name, last_name, email, nickname
+            FROM users";
+    $userResult = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($userResult);
+    $first_name = $row["first_name"];
+    $last_name = $row["last_name"];
+    $email = $row["email"];
+    $nickname = $row["nickname"];
+    
+    if(isset($_POST["submit"]) && $_FILES['pic']['size'] > 0){
         
         $first_name = $_POST["first_name"];
         $last_name = $_POST["last_name"];
@@ -23,9 +29,6 @@ include 'header.php';
 		$content = fread($fp, filesize($tmpName));
 		$content = addslashes($content);
 		fclose($fp);
-
-		$sql = "SELECT first_name, last_name, email, nickname
-                FROM users";
 		
         if(mysqli_query($conn, $sql)){
 	       echo "<h4 class='text-center'><span class='label label-success'>Registration successful. Pleas log in.</span></h4>";
@@ -37,18 +40,13 @@ include 'header.php';
 
     }
 
-        $sql = "SELECT first_name, last_name, email, nickname
-                FROM users";
-        
-        $userResult = mysqli_query($conn, $sql);
-
 ?>
 
 <div class="panel panel-default panel-primary">
     <div class="panel-heading">
         Profile </div>
     <div class="panel-body">
-        <form>
+        <form class="form-horizontal" action="prof_edit.php" method="POST">
         <input type="hidden" name="updateType" id="updateType" value="new"/>
             
             <div class="form-group">
@@ -84,14 +82,12 @@ include 'header.php';
                                placeholder="19000 or 19000-0000" value="<?php echo $nickname ?>" required disabled/>
                 </div>
             </div>
-        </form>
-        
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="submit" class="btn btn-primary">Edit Profile</button>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" name="submit" class="btn btn-primary">Edit Profile</button>
+                </div>
             </div>
-        </div>
-    
+        </form>
     </div>
 </div>
 
