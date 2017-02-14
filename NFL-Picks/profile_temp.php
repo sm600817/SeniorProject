@@ -8,15 +8,6 @@ include 'header.php';
 
 
 <?php
-    $sql = "SELECT first_name, last_name, email, nickname
-                FROM users
-                WHERE email = '$user'";
-    $userResult = mysqli_query($conn, $sql);
-    $row = $row = mysqli_fetch_assoc($userResult);
-    $first_name = $row["first_name"];
-    $last_name = $row["last_name"];
-    $email = $row["email"];
-    $nickname = $row["nickname"];
 
     /* add this to the if once you add the pic input field:
      * && $_FILES['pic']['size'] > 0
@@ -60,14 +51,14 @@ include 'header.php';
             <div class="form-group">
                 <label class="control-label col-sm-2" for="first_name">First Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name" value="<?php echo $first_name ?>" required disabled/>
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name" value="<?php echo $_SESSION['first_name'] ?>" required disabled/>
                 </div>
             </div>
             
             <div class="form-group">
                 <label class="control-label col-sm-2" for="last_name">Last Name:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="last_name" id="lastName" placeholder="Last Name" value="<?php echo $last_name ?>"  required disabled/>
+                    <input type="text" class="form-control" name="last_name" id="lastName" placeholder="Last Name" value="<?php echo $_SESSION['last_name'] ?>"  required disabled/>
                 </div>
             </div>
                 
@@ -75,7 +66,7 @@ include 'header.php';
                 <label class="control-label col-sm-2" for="email">Email Address:</label>
                 <div class="col-sm-10">
                     <input type="tel" class="form-control" name="email" id="email"
-                            value="<?php echo $email ?>" required disabled/>
+                            value="<?php echo $user ?>" required disabled/>
                 </div>
             </div>
                 
@@ -83,7 +74,7 @@ include 'header.php';
                 <label class="control-label col-sm-2" for="nickname">Nickname</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="nickname" id="nickname"
-                            value="<?php echo $nickname ?>" required disabled/>
+                            value="<?php echo $_SESSION['nickname'] ?>" required disabled/>
                 </div>
             </div>
             <div class="form-group">

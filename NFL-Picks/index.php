@@ -45,7 +45,9 @@ include 'header.php';
 								if (mysqli_num_rows($result) > 0){
 									$row = mysqli_fetch_assoc($result);
 									$_SESSION["email"] = $row["email"];
-									$_SESSION["name"] = $row["first_name"] . " " . $row["last_name"];
+									$_SESSION["first_name"] = $row["first_name"];
+									$_SESSION["last_name"] = $row["last_name"];
+									$_SESSION["fullname"] = $row["first_name"] . " " . $row["last_name"];
 									$_SESSION["nickname"] = $row["nickname"];
 									$_SESSION["prof_pic"] = $row["prof_pic"];
 									header("Location: Home.php");

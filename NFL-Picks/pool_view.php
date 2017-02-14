@@ -129,7 +129,7 @@ $result = mysqli_query($conn, $sql);
 				        		placeholder="Email of Invitee"/>
             		</div>
             		<div class="form-group">
-            			<a href="#" onclick="addFields()">+ Add Invitee</a>
+            			<a href="#" onclick="addFields()">+ Invite Another</a>
             			<input name="poolId" id="poolId" type="number" class="form-control" style="visibility:hidden;"/>
             		</div>
             		<div class="form-group">
