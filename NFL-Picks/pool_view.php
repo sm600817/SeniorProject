@@ -18,7 +18,13 @@ $manager = $row["manager"];
 
 
 ?>
-<div class="panel panel-default panel-primary">
+<div class="text-center">
+    <ul class="nav nav-pills" style="display: inline-block;">
+      <li class="active"><a href="#pool_info">Pool</a></li>
+      <li><a href="my_picks.php?pool=<?php echo $poolId; ?>">My Picks</a></li>
+    </ul>
+</div>
+<div class="panel panel-default panel-primary" id="pool_info">
 	<div class="panel-heading">Pool Info</div>
 	<div class="panel-body">
 		<?php if (mysqli_num_rows($result) > 0) { ?>
