@@ -9,7 +9,8 @@ include 'header.php';
 
 <?php
     $sql = "SELECT first_name, last_name, email, nickname
-                FROM users";
+                FROM users
+                WHERE email = '$user'";
     $userResult = mysqli_query($conn, $sql);
     $row = $row = mysqli_fetch_assoc($userResult);
     $first_name = $row["first_name"];
@@ -89,6 +90,7 @@ include 'header.php';
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="button" id="edit" name="edit" onclick="activate()" class="btn btn-primary">Edit Profile</button>
                     <input type="submit" style="display:none" id="edit-submit" name="edit-submit" class="btn btn-primary" value="Save">
+                    <input type="button" style="display:none" onclick="cancel()" id="edit-cancel" name="edit-cancel" class="btn btn-danger" value="Cancel">
                 </div>
             </div>
         </form>
@@ -105,8 +107,24 @@ include 'header.php';
 
         var edit = document.getElementById("edit");
         var editSubmit = document.getElementById("edit-submit");
+        var editCancel = document.getElementById("edit-cancel");
         edit.style.display = "none";
         editSubmit.style.display = "inline-block";
+        editCancel.style.display = "inline-block";
+    }
+
+    function cancel(){
+        var inputs = document.getElementsByTagName('input');
+        for(i=0;i<inputs.length;i++){
+            inputs[i].disabled=true;
+        }
+
+        var edit = document.getElementById("edit");
+        var editSubmit = document.getElementById("edit-submit");
+        var editCancel = document.getElementById("edit-cancel");
+        edit.style.display = "inline-block";
+        editSubmit.style.display = "none";
+        editCancel.style.display = "none";
     }
 
 
