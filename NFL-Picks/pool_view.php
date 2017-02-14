@@ -132,7 +132,7 @@ $result = mysqli_query($conn, $sql);
             	<form action="javascript:invite()" data-toggle="validator" role="form">
             		<div id="emails" class="form-group">
 				        <input name="invite1" type="email" id="invite1" class="form-control" 
-				        		placeholder="Email of Invitee"/>
+				        		placeholder="Email of Invitee" required>
             		</div>
             		<div class="form-group">
             			<a href="#" onclick="addFields()">+ Invite Another</a>
@@ -141,6 +141,7 @@ $result = mysqli_query($conn, $sql);
             		<div class="form-group">
             			<input class="btn btn-primary" type="submit" name="submit" value="Invite"/>
             		</div>
+                    <span id="message" class="hidden"></span>
             	</form>
             </div>
             <div class="modal-footer">
@@ -183,7 +184,9 @@ $result = mysqli_query($conn, $sql);
         for(var i=1; i <= fieldNum; i++){
         	var field = "invite" + i;
         	var invitee = document.getElementById(field).value;
-        	invitees.push(invitee);
+            if(invitee != null){
+                invitees.push(invitee);
+            }
         }
 
         $.ajax({
@@ -192,7 +195,8 @@ $result = mysqli_query($conn, $sql);
 		   		  pool: poolId},
 		   url: "invite.php",
 		   success: function(msg){
-		     $('.modal-body').html(msg);
+             $("#message").removeClass('hidden');
+		     $('#message').html(msg);
 		   }
 		});
     }
