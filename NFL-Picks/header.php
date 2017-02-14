@@ -9,6 +9,13 @@
 
     $user  = $_SESSION['email'];
 
+    $sql = "SELECT credits
+            FROM users
+            WHERE email = '$user'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $credits = $row['credits'];
+
     $sql = "SELECT COUNT(invite_id) AS count
             FROM invites
             WHERE recipient_id = '$user' AND was_read = 0";
@@ -66,6 +73,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li><a>Credits: <?php echo $credits; ?> </a></li>
                         <li><a href="profile_temp.php">Profile</a></li>
                         <li>
                             <a href="invites_view.php">

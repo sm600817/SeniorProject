@@ -52,7 +52,7 @@
 
 </style>
 <footer class="footer">
-    <div class="container">
+    <div class="container pull-left" style="margin-left: 15px;">
         <p class="text-muted">Copyright &copy; NFL-Picks, Saint Joseph's University.</p>
     </div>
 </footer>

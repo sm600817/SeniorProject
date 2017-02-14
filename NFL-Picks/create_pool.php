@@ -54,6 +54,12 @@ include 'header.php';
 			$sql = "INSERT INTO scores(pool_id, user, total_score) 
 				VALUES ($lastId, '$manager', 0)";
 			mysqli_query($conn, $sql);
+
+			$sql = "UPDATE users
+		            SET credits = credits - $buy_in
+		            WHERE email = '$user'";
+		    mysqli_query($conn, $sql);
+
 			header("Location: my_pools.php");
 		}
 		else {
