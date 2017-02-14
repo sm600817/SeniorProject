@@ -12,7 +12,7 @@ $sql = "SELECT pool_id, pool_name, pool_image, buy_in, total_pot
 $mgrResult = mysqli_query($conn, $sql);
 
 $sql = "SELECT pool_id, total_score
-		FROM picks
+		FROM scores
 		WHERE user = '$user'";
 
 $poolResult = mysqli_query($conn, $sql);

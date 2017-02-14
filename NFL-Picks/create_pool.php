@@ -51,7 +51,7 @@ include 'header.php';
 
 		if(mysqli_query($conn, $sql)){
 			$lastId = mysqli_insert_id($conn);
-			$sql = "INSERT INTO picks(pool_id, user, total_score) 
+			$sql = "INSERT INTO scores(pool_id, user, total_score) 
 				VALUES ($lastId, '$manager', 0)";
 			mysqli_query($conn, $sql);
 			header("Location: my_pools.php");

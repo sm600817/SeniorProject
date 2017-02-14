@@ -52,7 +52,7 @@ $manager = $row["manager"];
 <?php
 
 $sql = "SELECT user, total_score
-		FROM picks
+		FROM scores
 		WHERE pool_id = $poolId
 		ORDER BY total_score DESC";
 

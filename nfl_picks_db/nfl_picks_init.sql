@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 03, 2017 at 10:53 PM
+-- Generation Time: Feb 14, 2017 at 01:52 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -299,30 +299,29 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invites`
+--
+
+CREATE TABLE `invites` (
+  `invite_id` int(11) NOT NULL,
+  `manager_id` varchar(45) NOT NULL,
+  `recipient_id` varchar(45) NOT NULL,
+  `pool_id` int(11) NOT NULL,
+  `was_read` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `picks`
 --
 
 CREATE TABLE `picks` (
-  `pool_id` int(11) NOT NULL,
   `user` varchar(75) NOT NULL,
-  `total_score` int(11) DEFAULT NULL,
-  `week1` int(11) DEFAULT NULL,
-  `week2` int(11) DEFAULT NULL,
-  `week3` int(11) DEFAULT NULL,
-  `week4` int(11) DEFAULT NULL,
-  `week5` int(11) DEFAULT NULL,
-  `week6` int(11) DEFAULT NULL,
-  `week7` int(11) DEFAULT NULL,
-  `week8` int(11) DEFAULT NULL,
-  `week9` int(11) DEFAULT NULL,
-  `week10` int(11) DEFAULT NULL,
-  `week11` int(11) DEFAULT NULL,
-  `week12` int(11) DEFAULT NULL,
-  `week13` int(11) DEFAULT NULL,
-  `week14` int(11) DEFAULT NULL,
-  `week15` int(11) DEFAULT NULL,
-  `week16` int(11) DEFAULT NULL,
-  `week17` int(11) DEFAULT NULL
+  `pool_id` int(11) NOT NULL,
+  `week` int(11) NOT NULL,
+  `game` int(11) NOT NULL,
+  `team` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -348,8 +347,21 @@ CREATE TABLE `pools` (
   `pool_id` int(11) NOT NULL,
   `manager` varchar(75) NOT NULL,
   `pool_name` varchar(50) NOT NULL,
+  `pool_image` mediumblob,
   `buy_in` int(11) NOT NULL,
   `total_pot` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scores`
+--
+
+CREATE TABLE `scores` (
+  `pool_id` int(11) NOT NULL,
+  `user` varchar(75) NOT NULL,
+  `total_score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -361,7 +373,8 @@ CREATE TABLE `pools` (
 CREATE TABLE `teams` (
   `team_num` int(11) NOT NULL,
   `team_city` varchar(75) NOT NULL,
-  `team_name` varchar(45) DEFAULT NULL,
+  `team_name` varchar(45) NOT NULL,
+  `team_logo` mediumblob,
   `wins` int(11) DEFAULT NULL,
   `losses` int(11) DEFAULT NULL,
   `ties` int(11) DEFAULT NULL,
@@ -372,39 +385,39 @@ CREATE TABLE `teams` (
 -- Dumping data for table `teams`
 --
 
-INSERT INTO `teams` (`team_num`, `team_city`, `team_name`, `wins`, `losses`, `ties`, `offPct`) VALUES
-(1, 'Philadelphia', 'Eagles', 0, 0, 0, 19),
-(2, 'New York', 'Giants', 0, 0, 0, 17),
-(3, 'Dallas', 'Cowboys', 0, 0, 0, 29),
-(4, 'Washington', 'Redskins', 0, 0, 0, 26),
-(5, 'Seattle', 'Seahawks', 0, 0, 0, 20),
-(6, 'Arizona', 'Cardinals', 0, 0, 0, 25),
-(7, 'Los Angeles', 'Rams', 0, 0, 0, 12),
-(8, 'San Francisco', '49ers', 0, 0, 0, 18),
-(9, 'Green Bay', 'Packers', 0, 0, 0, 31),
-(10, 'Detroit', 'Lions', 0, 0, 0, 22),
-(11, 'Minnesota', 'Vikings', 0, 1, 0, 18),
-(12, 'Chicago', 'Bears', 0, 0, 0, 17),
-(13, 'Atlanta', 'Falcons', 0, 0, 0, 35),
-(14, 'Tampa Bay', 'Buccanneers', 0, 0, 0, 21),
-(15, 'New Orleans', 'Saints', 0, 0, 0, 31),
-(16, 'Carolina', 'Panthers', 0, 0, 0, 20),
-(17, 'New England', 'Patriots', 0, 0, 0, 30),
-(18, 'Miami', 'Dolphins', 0, 0, 0, 22),
-(19, 'Buffalo', 'Bills', 0, 0, 0, 26),
-(20, 'New York', 'Jets', 0, 0, 0, 15),
-(21, 'Kansas City', 'Chiefs', 0, 0, 0, 20),
-(22, 'Oakland', 'Raiders', 0, 0, 0, 24),
-(23, 'Denver', 'Broncos', 0, 0, 0, 16),
-(24, 'San Diego', 'Chargers', 0, 0, 0, 24),
-(25, 'Pittsburg', 'Steelers', 0, 0, 0, 26),
-(26, 'Baltimore', 'Ravens', 0, 0, 0, 16),
-(27, 'Cincinnati', 'Bengals', 0, 0, 0, 20),
-(28, 'Cleveland', 'Browns', 0, 0, 0, 15),
-(29, 'Houston', 'Texans', 0, 0, 0, 17),
-(30, 'Tennesse', 'Titans', 0, 0, 0, 25),
-(31, 'Indianapolis', 'Colts', 0, 0, 0, 26),
-(32, 'Jacksonville', 'Jaguars', 0, 0, 0, 17);
+INSERT INTO `teams` (`team_num`, `team_city`, `team_name`, `team_logo`, `wins`, `losses`, `ties`, `offPct`) VALUES
+(1, 'Philadelphia', 'Eagles', '', 0, 0, 0, 19),
+(2, 'New York', 'Giants', '', 0, 0, 0, 17),
+(3, 'Dallas', 'Cowboys', '', 0, 0, 0, 29),
+(4, 'Washington', 'Redskins', '', 0, 0, 0, 26),
+(5, 'Seattle', 'Seahawks', '', 0, 0, 0, 20),
+(6, 'Arizona', 'Cardinals', '', 0, 0, 0, 25),
+(7, 'Los Angeles', 'Rams', '', 0, 0, 0, 12),
+(8, 'San Francisco', '49ers', '', 0, 0, 0, 18),
+(9, 'Green Bay', 'Packers', '', 0, 0, 0, 31),
+(10, 'Detroit', 'Lions', '', 0, 0, 0, 22),
+(11, 'Minnesota', 'Vikings', '', 0, 1, 0, 18),
+(12, 'Chicago', 'Bears', '', 0, 0, 0, 17),
+(13, 'Atlanta', 'Falcons', '', 0, 0, 0, 35),
+(14, 'Tampa Bay', 'Buccanneers', '', 0, 0, 0, 21),
+(15, 'New Orleans', 'Saints', '', 0, 0, 0, 31),
+(16, 'Carolina', 'Panthers', '', 0, 0, 0, 20),
+(17, 'New England', 'Patriots', '', 0, 0, 0, 30),
+(18, 'Miami', 'Dolphins', '', 0, 0, 0, 22),
+(19, 'Buffalo', 'Bills', '', 0, 0, 0, 26),
+(20, 'New York', 'Jets', '', 0, 0, 0, 15),
+(21, 'Kansas City', 'Chiefs', '', 0, 0, 0, 20),
+(22, 'Oakland', 'Raiders', '', 0, 0, 0, 24),
+(23, 'Denver', 'Broncos', '', 0, 0, 0, 16),
+(24, 'San Diego', 'Chargers', '', 0, 0, 0, 24),
+(25, 'Pittsburg', 'Steelers', '', 0, 0, 0, 26),
+(26, 'Baltimore', 'Ravens', '', 0, 0, 0, 16),
+(27, 'Cincinnati', 'Bengals', '', 0, 0, 0, 20),
+(28, 'Cleveland', 'Browns', '', 0, 0, 0, 15),
+(29, 'Houston', 'Texans', '', 0, 0, 0, 17),
+(30, 'Tennesse', 'Titans', '', 0, 0, 0, 25),
+(31, 'Indianapolis', 'Colts', '', 0, 0, 0, 26),
+(32, 'Jacksonville', 'Jaguars', '', 0, 0, 0, 17);
 
 -- --------------------------------------------------------
 
@@ -430,6 +443,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `weeks` (
   `week_id` int(11) NOT NULL,
+  `was_played` tinyint(1) NOT NULL DEFAULT '0',
   `game1` int(11) DEFAULT NULL,
   `game2` int(11) DEFAULT NULL,
   `game3` int(11) DEFAULT NULL,
@@ -452,24 +466,24 @@ CREATE TABLE `weeks` (
 -- Dumping data for table `weeks`
 --
 
-INSERT INTO `weeks` (`week_id`, `game1`, `game2`, `game3`, `game4`, `game5`, `game6`, `game7`, `game8`, `game9`, `game10`, `game11`, `game12`, `game13`, `game14`, `game15`, `game16`) VALUES
-(1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16),
-(2, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32),
-(3, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48),
-(4, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, NULL),
-(5, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, NULL, NULL),
-(6, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, NULL),
-(7, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, NULL),
-(8, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, NULL, NULL, NULL),
-(9, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, NULL, NULL, NULL),
-(10, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, NULL, NULL),
-(11, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, NULL, NULL),
-(12, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177),
-(13, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, NULL),
-(14, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208),
-(15, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224),
-(16, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240),
-(17, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256);
+INSERT INTO `weeks` (`week_id`, `was_played`, `game1`, `game2`, `game3`, `game4`, `game5`, `game6`, `game7`, `game8`, `game9`, `game10`, `game11`, `game12`, `game13`, `game14`, `game15`, `game16`) VALUES
+(1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16),
+(2, 0, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32),
+(3, 0, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48),
+(4, 0, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, NULL),
+(5, 0, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, NULL, NULL),
+(6, 0, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, NULL),
+(7, 0, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, NULL),
+(8, 0, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, NULL, NULL, NULL),
+(9, 0, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, NULL, NULL, NULL),
+(10, 0, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, NULL, NULL),
+(11, 0, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, NULL, NULL),
+(12, 0, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177),
+(13, 0, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, NULL),
+(14, 0, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208),
+(15, 0, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224),
+(16, 0, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240),
+(17, 0, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256);
 
 --
 -- Indexes for dumped tables
@@ -484,14 +498,25 @@ ALTER TABLE `games`
   ADD KEY `away_team_idx` (`away_team`);
 
 --
+-- Indexes for table `invites`
+--
+ALTER TABLE `invites`
+  ADD PRIMARY KEY (`invite_id`),
+  ADD KEY `manager_id` (`manager_id`),
+  ADD KEY `recipient_id` (`recipient_id`),
+  ADD KEY `pool_id` (`pool_id`),
+  ADD KEY `invite_id` (`invite_id`);
+
+--
 -- Indexes for table `picks`
 --
 ALTER TABLE `picks`
-  ADD PRIMARY KEY (`pool_id`,`user`),
-  ADD KEY `team_id_idx` (`week1`,`week2`,`week4`,`week6`,`week5`,`week3`,`week7`,`week8`,`week9`,`week10`,`week11`,`week12`,`week13`,`week14`,`week15`,`week16`),
-  ADD KEY `week17` (`week17`),
+  ADD PRIMARY KEY (`user`,`pool_id`,`week`),
   ADD KEY `pool_id` (`pool_id`),
-  ADD KEY `user` (`user`);
+  ADD KEY `week` (`week`),
+  ADD KEY `user` (`user`),
+  ADD KEY `game` (`game`),
+  ADD KEY `team` (`team`);
 
 --
 -- Indexes for table `players`
@@ -506,6 +531,14 @@ ALTER TABLE `players`
 ALTER TABLE `pools`
   ADD PRIMARY KEY (`pool_id`),
   ADD KEY `manager` (`manager`);
+
+--
+-- Indexes for table `scores`
+--
+ALTER TABLE `scores`
+  ADD PRIMARY KEY (`pool_id`,`user`),
+  ADD KEY `pool_id` (`pool_id`),
+  ADD KEY `user` (`user`);
 
 --
 -- Indexes for table `teams`
@@ -546,6 +579,11 @@ ALTER TABLE `weeks`
 --
 
 --
+-- AUTO_INCREMENT for table `invites`
+--
+ALTER TABLE `invites`
+  MODIFY `invite_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `players`
 --
 ALTER TABLE `players`
@@ -554,7 +592,7 @@ ALTER TABLE `players`
 -- AUTO_INCREMENT for table `pools`
 --
 ALTER TABLE `pools`
-  MODIFY `pool_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pool_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `teams`
 --
@@ -577,11 +615,23 @@ ALTER TABLE `games`
   ADD CONSTRAINT `home_team` FOREIGN KEY (`home_team`) REFERENCES `teams` (`team_num`) ON DELETE NO ACTION;
 
 --
+-- Constraints for table `invites`
+--
+ALTER TABLE `invites`
+  ADD CONSTRAINT `invites_ibfk_1` FOREIGN KEY (`pool_id`) REFERENCES `pools` (`pool_id`),
+  ADD CONSTRAINT `invites_ibfk_2` FOREIGN KEY (`manager_id`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `invites_ibfk_3` FOREIGN KEY (`recipient_id`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `invites_ibfk_4` FOREIGN KEY (`pool_id`) REFERENCES `pools` (`pool_id`);
+
+--
 -- Constraints for table `picks`
 --
 ALTER TABLE `picks`
-  ADD CONSTRAINT `picks_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`email`),
-  ADD CONSTRAINT `picks_ibfk_2` FOREIGN KEY (`pool_id`) REFERENCES `pools` (`pool_id`);
+  ADD CONSTRAINT `picks_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `picks_ibfk_2` FOREIGN KEY (`pool_id`) REFERENCES `pools` (`pool_id`),
+  ADD CONSTRAINT `picks_ibfk_3` FOREIGN KEY (`week`) REFERENCES `weeks` (`week_id`),
+  ADD CONSTRAINT `picks_ibfk_4` FOREIGN KEY (`game`) REFERENCES `games` (`game_id`),
+  ADD CONSTRAINT `picks_ibfk_5` FOREIGN KEY (`team`) REFERENCES `teams` (`team_num`);
 
 --
 -- Constraints for table `players`
@@ -593,7 +643,14 @@ ALTER TABLE `players`
 -- Constraints for table `pools`
 --
 ALTER TABLE `pools`
-  ADD CONSTRAINT `pools_ibfk_1` FOREIGN KEY (`manager`) REFERENCES `users` (`email`);
+  ADD CONSTRAINT `pools_ibfk_1` FOREIGN KEY (`manager`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `scores`
+--
+ALTER TABLE `scores`
+  ADD CONSTRAINT `scores_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `scores_ibfk_2` FOREIGN KEY (`pool_id`) REFERENCES `pools` (`pool_id`);
 
 --
 -- Constraints for table `weeks`

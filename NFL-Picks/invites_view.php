@@ -68,7 +68,6 @@ $result = mysqli_query($conn, $sql);
         </table>
     	<?php } else { ?>
     	<div class="alert alert-warning alert-dismissible">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>No Invites!</strong> You have no invites
         </div>
         <?php } ?>
