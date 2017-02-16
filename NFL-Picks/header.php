@@ -34,12 +34,15 @@
     <title><?php echo $title; ?></title>
     <!-- Bootstrap core CSS -->
     <link href="/SeniorProject/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!--Bootstrap js -->
     <script src="/SeniorProject/bootstrap/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <script type="text/javascript" src="/SeniorProject/bootstrap/bootstrap-filestyle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">

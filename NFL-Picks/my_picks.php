@@ -13,10 +13,38 @@ $poolId = $_GET["pool"];
       <li class="active"><a href="#">My Picks</a></li>
     </ul>
 </div>
-<ul class="nav nav-pills" style="display: inline-block;">
-      <li class="active"><a href="#">Week 1</a></li>
-      <li><a href="#">Week 2</a></li>
-</ul>
+<div>
+	<select name="weekSelect" id="weekSelect">
+		<option value="none">Select Week...</option>
+		<?php
+		for($i = 1; $i < 18; $i++){
+			echo "<option value='$i'>$i</option>";
+		}
+		?>
+	 </select>
+
+</div>
+
+<script>
+	$(document).ready(function(){ 
+	    $("#weekSelect").change(function(){ 
+	      var week = $(this).val();
+	      var dataString = "week="+week;
+	      $("#simBtn").prop('disabled', false);
+
+	      $.ajax({ 
+	        type: "POST", 
+	        url: "getWeek.php", 
+	        data: dataString, 
+	        success: function(result){ 
+	          $("#show").html(result); 
+	        }
+	      });
+
+	    });
+	});
 
 
+
+</script>
 <?php include "footer.php"; ?>

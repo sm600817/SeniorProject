@@ -28,7 +28,7 @@ $manager = $row["manager"];
 	<div class="panel-heading">Pool Info</div>
 	<div class="panel-body">
 		<?php if (mysqli_num_rows($result) > 0) { ?>
-		<table class="table table-hover">
+		<table class="table table-default">
             <thead>
             <tr>
                 <th>Pool</th>
@@ -88,6 +88,7 @@ $result = mysqli_query($conn, $sql);
             </thead>
             <tbody>
             <?php
+                $form = 0;
             	while($row = mysqli_fetch_assoc($result)) {
             		$member = $row["user"];
 
@@ -102,12 +103,19 @@ $result = mysqli_query($conn, $sql);
             		$nickname = $memberRow["nickname"];
             		$member_pic = $memberRow["prof_pic"];
 
+                    echo "<div style='display:none'>
+                            <form id='$form' action='user_picks.php' method='POST' style='display:none'>
+                                <input type='number' name='pool' value='$poolId'>
+                                <input type='text' name='member' value='$member'>
+                            </form>
+                          </div>";
+
             		echo "<tr>";
     				echo "<td><img hspace='5' WIDTH='30' src='data:image/jpeg;base64," . base64_encode( $member_pic ) . 
-    						"'/><a href='member_picks.php?pool=" . $poolId . "&member=" . $member . 
-    						"'>" . $nickname . "</a></td>";
+    						"'/><a style='cursor:pointer' onclick='postData($form)'>" . $nickname . "</a></td>";
     				echo "<td>" . $row["total_score"] . "</td>";
     				echo "</tr>";
+                    $form++;
     			}
             ?>
         	</tbody>
@@ -162,6 +170,10 @@ $result = mysqli_query($conn, $sql);
 	  		document.getElementById("poolId").value = poolId;
 		});
 	});
+
+    function postData(form){
+        document.getElementById(form).submit();
+    }
 
 	function addFields(){
 		fieldNum++;
