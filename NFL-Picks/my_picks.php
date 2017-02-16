@@ -6,6 +6,14 @@ include 'header.php';
 <?php
 $poolId = $_GET["pool"];
 
+$sql = "SELECT week_id
+		FROM weeks
+		WHERE was_played = 0
+		GROUP BY was_played";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$week = $row["week_id"];
+
 ?>
 <div class="text-center">
     <ul class="nav nav-pills" style="display: inline-block;">
@@ -13,16 +21,17 @@ $poolId = $_GET["pool"];
       <li class="active"><a href="#">My Picks</a></li>
     </ul>
 </div>
-<div>
-	<select name="weekSelect" id="weekSelect">
-		<option value="none">Select Week...</option>
+<div class="row">
+	<select class="selectpicker" name="weekSelect" id="weekSelect" data-style="btn-info" data-width="fit">
 		<?php
 		for($i = 1; $i < 18; $i++){
-			echo "<option value='$i'>$i</option>";
+			if($i == $week)
+				echo "<option selected='selected' value='$i'>Week $i</option>";
+			else
+				echo "<option value='$i'>Week $i</option>";
 		}
 		?>
 	 </select>
-
 </div>
 
 <script>
