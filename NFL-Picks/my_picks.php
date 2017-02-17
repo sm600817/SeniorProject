@@ -15,6 +15,7 @@ $row = mysqli_fetch_assoc($result);
 $week = $row["week_id"];
 
 ?>
+<input type='number' id='pool' style='display:none;' value='<?php echo $poolId ?>'>
 <div class="text-center">
     <ul class="nav nav-pills" style="display: inline-block;">
       <li><a href="pool_view.php?pool=<?php echo $poolId; ?>">Pool</a></li>
@@ -33,13 +34,30 @@ $week = $row["week_id"];
 		?>
 	 </select>
 </div>
+<div id="show" class="text-center table-responsive">
+
+
+
+</div>
 
 <script>
 	$(document).ready(function(){ 
+
+		var week = $('#weekSelect').val();
+		var pool = $('#pool').val();
+		var dataString = "week="+week+"&pool="+pool;
+		$.ajax({ 
+	        type: "POST", 
+	        url: "getWeek.php", 
+	        data: dataString, 
+	        success: function(result){ 
+	          $("#show").html(result); 
+	        }
+	    });
+
 	    $("#weekSelect").change(function(){ 
 	      var week = $(this).val();
-	      var dataString = "week="+week;
-	      $("#simBtn").prop('disabled', false);
+	      var dataString = "week="+week+"&pool="+pool;
 
 	      $.ajax({ 
 	        type: "POST", 
