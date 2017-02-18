@@ -3,12 +3,36 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 30, 2017 at 03:31 AM
+-- Generation Time: Feb 18, 2017 at 07:20 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `nfl_picks`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `games`
+--
+
+CREATE TABLE `games` (
+  `game_id` int(11) NOT NULL,
+  `home_team` int(11) DEFAULT NULL,
+  `away_team` int(11) DEFAULT NULL,
+  `home_score` int(11) DEFAULT NULL,
+  `away_score` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `games`
@@ -86,7 +110,7 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (69, 10, 1, 0, 0),
 (70, 18, 30, 0, 0),
 (71, 26, 4, 0, 0),
-(72, 28, 13, 0, 0),
+(72, 23, 13, 0, 0),
 (73, 7, 19, 0, 0),
 (74, 3, 27, 0, 0),
 (75, 22, 24, 0, 0),
@@ -135,8 +159,6 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (118, 16, 6, 0, 0),
 (119, 3, 1, 0, 0),
 (120, 12, 11, 0, 0),
-
--- week 9
 (121, 13, 14, 0, 0),
 (122, 3, 28, 0, 0),
 (123, 10, 11, 0, 0),
@@ -150,8 +172,6 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (131, 30, 24, 0, 0),
 (132, 23, 22, 0, 0),
 (133, 19, 5, 0, 0),
-
--- week 10
 (134, 28, 26, 0, 0),
 (135, 13, 1, 0, 0),
 (136, 12, 14, 0, 0),
@@ -166,9 +186,6 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (145, 8, 6, 0, 0),
 (146, 5, 17, 0, 0),
 (147, 27, 2, 0, 0),
-
-
--- week 11
 (148, 15, 16, 0, 0),
 (149, 6, 11, 0, 0),
 (150, 26, 3, 0, 0),
@@ -183,8 +200,6 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (159, 1, 5, 0, 0),
 (160, 9, 4, 0, 0),
 (161, 29, 22, 0, 0),
-
--- week 12
 (162, 11, 10, 0, 0),
 (163, 4, 3, 0, 0),
 (164, 25, 31, 0, 0),
@@ -201,8 +216,6 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (175, 17, 20, 0, 0),
 (176, 21, 23, 0, 0),
 (177, 9, 1, 0, 0),
-
--- week 13
 (178, 3, 11, 0, 0),
 (179, 23, 32, 0, 0),
 (180, 10, 15, 0, 0),
@@ -218,8 +231,6 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (190, 4, 6, 0, 0),
 (191, 16, 5, 0, 0),
 (192, 31, 20, 0, 0),
-
--- week 14
 (193, 22, 21, 0, 0),
 (194, 6, 18, 0, 0),
 (195, 12, 10, 0, 0),
@@ -236,8 +247,6 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (206, 5, 9, 0, 0),
 (207, 3, 2, 0, 0),
 (208, 26, 17, 0, 0),
-
--- week 15
 (209, 7, 5, 0, 0),
 (210, 18, 20, 0, 0),
 (211, 28, 19, 0, 0),
@@ -254,8 +263,6 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (222, 22, 24, 0, 0),
 (223, 14, 3, 0, 0),
 (224, 16, 4, 0, 0),
-
--- week 16
 (225, 2, 1, 0, 0),
 (226, 13, 16, 0, 0),
 (227, 18, 19, 0, 0),
@@ -272,8 +279,6 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (238, 26, 25, 0, 0),
 (239, 23, 21, 0, 0),
 (240, 10, 3, 0, 0),
-
--- week 17
 (241, 26, 27, 0, 0),
 (242, 19, 20, 0, 0),
 (243, 16, 14, 0, 0),
@@ -290,3 +295,30 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (254, 22, 4, 0, 0),
 (255, 5, 8, 0, 0),
 (256, 9, 10, 0, 0);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `games`
+--
+ALTER TABLE `games`
+  ADD PRIMARY KEY (`game_id`),
+  ADD KEY `home_team_idx` (`home_team`),
+  ADD KEY `away_team_idx` (`away_team`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `games`
+--
+ALTER TABLE `games`
+  ADD CONSTRAINT `away_team` FOREIGN KEY (`away_team`) REFERENCES `teams` (`team_num`) ON DELETE NO ACTION,
+  ADD CONSTRAINT `home_team` FOREIGN KEY (`home_team`) REFERENCES `teams` (`team_num`) ON DELETE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

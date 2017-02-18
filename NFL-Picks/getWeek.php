@@ -42,7 +42,7 @@ if(!empty($_POST["week"])){
 			$pick_result = mysqli_query($conn, $sql);
 			if (mysqli_num_rows($pick_result) > 0) {
 				$pick_row = mysqli_fetch_assoc($pick_result);
-				$pick = $pick_row["team"];				
+				$pick = $pick_row["team"];			
 			}
 			else{
 				$pick = 0;

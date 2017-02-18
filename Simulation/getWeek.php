@@ -73,7 +73,7 @@ if(!empty($_POST["week"])){
 				}
 				else{
 					echo "<p id='". $week_row[$gameStr] . "''>" . $awayTeam . " at " . $homeTeam . "</p>";
-					echo "<button style='visibility:hidden' id='btn". $week_row[$gameStr] . "'' type='button' onclick='simGame(". $week_row[$gameStr] . "," . $awayId . ",". $homeId.")'>Simulate</button>";
+					echo "<button style='visibility:hidden' id='btn". $game . "'' type='button' onclick='simGame(". $week_row[$gameStr] . "," . $awayId . ",". $homeId.")'>Simulate</button>";
 				}
 			}
 			$game++;

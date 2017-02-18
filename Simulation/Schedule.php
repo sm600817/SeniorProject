@@ -9,6 +9,7 @@
 			      var week = $(this).val();
 			      var dataString = "week="+week;
 			      $("#simBtn").prop('disabled', false);
+			      $("#result").html("");
 
 			      $.ajax({ 
 			        type: "POST", 
@@ -34,6 +35,22 @@
 
 				}
 				document.getElementById("simBtn").disabled = true;
+
+				var week = $('#weekSelect').val();
+
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange=function(){
+					if (xhttp.readyState==4 && xhttp.status==200){
+						var data = xhttp.responseText;
+						document.getElementById('result').innerHTML = data;
+					}
+				}//end onreadystatechange
+				
+				var link = "assign_pts.php?week=" + week;
+
+				xhttp.open("GET", link, true);
+				xhttp.send();
+
 			}
 
 
@@ -56,7 +73,7 @@
 		</script>
 	</head>
 	<body>
-		<p style="line-height: 18px; font-size: 18px;  font-family: times;">
+		<p id="result" style="line-height: 18px; font-size: 18px;  font-family: times;"></p>
 		<br>
 		Week <select name="weekSelect" id="weekSelect">
 				<option value="none">Select Week...</option>
