@@ -3,64 +3,50 @@ $title = 'NFL-Picks';
 $page = 'Home';
 include 'header.php';
 ?>
-    
-<body>
 
-    <style>
+<div class="home_page_container">
+    <div class="container-fluid">
+        <div class="panel panel-default panel-primary">
+            <div class="panel-heading">NFL-Picks</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-3">
     
-        .leftInfo {
-            float: left;
-            width: 300px;
-        }
-        
-        .rightInfo {
-            float: right;
-            width: 300px;
-        }
-        
-        .feedText {
-            display: inline-block;
-        }
+                        <!-- Profile image to be inserted here -->
     
-    </style>
-
-    <h1 id="projectName" class="projectName">NFL-Picks</h1>
+                        <p class="usernamePrint">Temp username</p>
+                        <p class="creditsPrint">Credits: 2,000</p>
+                        <p class="profileInfo">Info (will be filled via script later)</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="feedStream">
     
-    <div id="leftInfo" class="leftInfo">
-        
-        <!-- Profile image to be inserted here -->
-        
-        <p id="usernamePrint" class="usernamePrint">Temp username</p>
-        <p id="creditsPrint" class="creditsPrint">Credits: 2,000</p>
-        <p id="profileInfo" class="profileInfo">Info (will be filled via script later)</p>
-        
+                            <h3 class="container">Feed</h3>
+                
+                            <!-- TODO: write script to add content to stream feed, live -->
+                
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="rightInfo">
+                            <a href="">Profile</a>
+                            <p></p>
+                            <a href="my_pools.php">Pools</a>
+                            <p></p>
+                            <a href="">History</a>
+                            <p></p>
+                            <a href="">Following</a>
+                            <p></p>
+                            <a href="">Top Scores</a>
+                            <p></p>
+                            <a href="">Predictions</a>
+                            <p></p>
+                            <a href="">Related News</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div id="feedStream" class="feedStream">
-        
-        <h3 id="feedText" class="feedText">Feed</h3>
-        
-        <!-- TODO: write script to add content to stream feed, live -->
-        
-    </div>
-    
-    <div id="rightInfo" class="rightInfo">
-        
-        <a href="">Profile</a>
-        <p></p>
-        <a href="">Pools</a>
-        <p></p>
-        <a href="">History</a>
-        <p></p>
-        <a href="">Following</a>
-        <p></p>
-        <a href="">Top Scores</a>
-        <p></p>
-        <a href="">Predictions</a>
-        <p></p>
-        <a href="">Related News</a>
-        
-    </div>
-    
-</body>
+</div>
 <?php include "footer.php"; ?>
