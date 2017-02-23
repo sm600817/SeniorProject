@@ -95,4 +95,4 @@
             <?php endif; ?>
         </div>
     </nav>
-    <div class="container" style="margin-top: 1em">
+    <div class="body_container">

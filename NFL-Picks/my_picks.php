@@ -15,6 +15,7 @@ $row = mysqli_fetch_assoc($result);
 $week = $row["week_id"];
 
 ?>
+<div class="container-fluid">
 <input type='number' id='pool' style='display:none;' value='<?php echo $poolId ?>'>
 <div class="text-center">
     <ul class="nav nav-pills" style="display: inline-block;">
@@ -33,13 +34,16 @@ $week = $row["week_id"];
 		}
 		?>
 	 </select>
+	 <div class="pull-right">
+	 	<button id="picks-submit" class="form-control btn btn-success" onclick="submitPicks()">Save</button>
+	 </div>
 </div>
 <div id="show" class="text-center table-responsive">
 
 
 
 </div>
-
+</div>
 <script>
 	$(document).ready(function(){ 
 
@@ -70,6 +74,22 @@ $week = $row["week_id"];
 
 	    });
 	});
+
+	function submitPicks() {
+		var pick = $('input[name="pick"]:checked').val();
+		var week = $('#weekSelect').val();
+		var pool = $('#pool').val();
+		var dataString = "week="+week+"&pool="+pool+"&pick="+pick; 
+
+		$.ajax({
+			type: "POST",
+			url: "submit_picks.php",
+			data: dataString,
+			success: function(result){
+				$('#pick_result').html(result);
+			}
+		})
+	}
 
 
 

@@ -8,15 +8,19 @@
         min-height: 100%;
     }
     body {
-        /* Margin bottom by footer height */
-        margin-bottom: 60px;
     }
+
+    .navbar {
+        /* Set the fixed height of the navbar here */
+        height: 2%;
+    }
+
     .footer {
         position: absolute;
         bottom: 0;
         width: 100%;
         /* Set the fixed height of the footer here */
-        height: 60px;
+        height: 4em;
         background-color: #f5f5f5;
     }
 
@@ -25,21 +29,16 @@
     -------------------------------------------------- */
     /* Not required for template or sticky footer method. */
 
-    body > .container {
-        padding: 60px 15px 0;
-    }
-    .container .text-muted {
-        margin-top: 20px;
-        margin-left: 0;
+    body > .body_container {
+        margin-bottom: 5em;
+        margin-top: 5em;
+        margin-left: 5em;
+        margin-right: 5em;
     }
 
     .footer > .container {
         padding-right: 0;
         padding-left: 0;
-    }
-
-    code {
-        font-size: 80%;
     }
 
     .badge-notification {
@@ -52,7 +51,7 @@
 
 </style>
 <footer class="footer">
-    <div class="container pull-left" style="margin-left: 15px;">
+    <div class="container pull-left" style="margin-left: 15px; margin-top: 20px">
         <p class="text-muted">Copyright &copy; NFL-Picks, Saint Joseph's University.</p>
     </div>
 </footer>

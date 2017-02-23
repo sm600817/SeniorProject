@@ -246,7 +246,7 @@ if(!empty($_POST["week"])){
 		return false;
 	}
 	echo "	</tbody>
-		   </table>";
+		</table>";
 	$conn->close();
 }
 
