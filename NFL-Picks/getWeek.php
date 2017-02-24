@@ -96,14 +96,14 @@ if(!empty($_POST["week"])){
 
 						if ($pick == $awayTeam_id) {
 							if($awayScore > $homeScore){
-								echo "<tr class='success'>
+								echo "<tr id='$game_id' class='success'>
 										<td><label class='radio-inline'><strong>* $awayTeam</strong></label></td>
 										<td><label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label></td>
 										<td><label class='radio-inline'>$homeTeam</label></td>
 									  </tr>";
 							}
 							else {
-								echo "<tr class='danger'>
+								echo "<tr id='$game_id' class='danger'>
 										<td><label class='radio-inline'><strong>* $awayTeam</strong></label></td>
 										<td><label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label></td>
 										<td><label class='radio-inline'>$homeTeam</label></td>
@@ -112,14 +112,14 @@ if(!empty($_POST["week"])){
 						}
 						else if($pick == $homeTeam_id){
 							if($homeScore > $awayScore){
-								echo "<tr class='success'>
+								echo "<tr id='$game_id' class='success'>
 										<td><label class='radio-inline'>$awayTeam</label></td>
 										<td><label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label></td>
 										<td><label class='radio-inline'><strong>* $homeTeam</strong></label></td>
 									  </tr>";
 							}
 							else {
-								echo "<tr class='danger'>
+								echo "<tr id='$game_id' class='danger'>
 										<td><label class='radio-inline'>$awayTeam</label></td>
 										<td><label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label></td>
 										<td><label class='radio-inline'><strong>* $homeTeam</strong></label></td>
@@ -127,7 +127,7 @@ if(!empty($_POST["week"])){
 							}
 						}
 						else{
-							echo "<tr>
+							echo "<tr id='$game_id' >
 									<td><label class='radio-inline'>$awayTeam</label></td>
 									<td><label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label></td>
 									<td><label class='radio-inline'>$homeTeam</label></td>
@@ -193,43 +193,83 @@ if(!empty($_POST["week"])){
 						}
 					}
 
-					$sql = "SELECT team
+					$sql = "SELECT pts_assigned
+							FROM picks
+							WHERE user = '$user' 
+							AND pool_id = $pool
+							AND week = $week
+							AND game = $game_id
+							AND team = $awayTeam_id";
+					$awayPickWeek_result = mysqli_query($conn, $sql);
+
+					$sql = "SELECT pts_assigned
+							FROM picks
+							WHERE user = '$user' 
+							AND pool_id = $pool
+							AND week = $week
+							AND game = $game_id
+							AND team = $homeTeam_id";
+					$homePickWeek_result = mysqli_query($conn, $sql);
+
+					$sql = "SELECT team, pts_assigned
 							FROM picks
 							WHERE user = '$user' 
 							AND pool_id = $pool
 							AND team = $awayTeam_id";
 					$awayPick_result = mysqli_query($conn, $sql);
 
-					$sql = "SELECT team
+					$sql = "SELECT team, pts_assigned
 							FROM picks
 							WHERE user = '$user' 
 							AND pool_id = $pool
 							AND team = $homeTeam_id";
 					$homePick_result = mysqli_query($conn, $sql);
 
-					if (mysqli_num_rows($homePick_result) > 0 && mysqli_num_rows($awayPick_result) > 0) {
-						echo "<tr class='danger'>
+					if(mysqli_num_rows($awayPickWeek_result) > 0){
+						$awayPick_row = mysqli_fetch_assoc($awayPickWeek_result);
+						$away_ptsAssigned = $awayPick_row['pts_assigned'];
+						if($away_ptsAssigned == 0){
+							echo "<tr id='$game_id' >
+								<td><label class='radio-inline'><input checked='checked' type='radio' name='pick' value='$awayTeam_id'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
+								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
+								<td><label class='radio-inline'><input type='radio' name='pick' value='$homeTeam_id'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
+							  </tr>";
+						}
+					}
+					else if(mysqli_num_rows($homePickWeek_result) > 0){
+						$homePick_row = mysqli_fetch_assoc($homePickWeek_result);
+						$home_ptsAssigned = $homePick_row['pts_assigned'];
+						if($home_ptsAssigned == 0){
+							echo "<tr id='$game_id' >
+								<td><label class='radio-inline'><input type='radio' name='pick' value='$awayTeam_id'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
+								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
+								<td><label class='radio-inline'><input checked='checked' type='radio' name='pick' value='$homeTeam_id'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
+							  </tr>";
+						}
+					}
+					else if (mysqli_num_rows($homePick_result) > 0 && mysqli_num_rows($awayPick_result) > 0) {
+						echo "<tr id='$game_id' class='danger'>
 								<td><label class='radio-inline'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
 								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
 								<td><label class='radio-inline'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 							  </tr>";
 					}
 					else if(mysqli_num_rows($awayPick_result) > 0) {
-						echo "<tr class='warning'>
+						echo "<tr id='$game_id' class='warning'>
 								<td><label class='radio-inline'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
 								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
 								<td><label class='radio-inline'><input type='radio' name='pick' value='$homeTeam_id'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 							  </tr>";
 					}
 					else if(mysqli_num_rows($homePick_result) > 0) {
-						echo "<tr class='warning'>
+						echo "<tr id='$game_id' class='warning'>
 								<td><label class='radio-inline'><input type='radio' name='pick' value='$awayTeam_id'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
 								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
 								<td><label class='radio-inline'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 							  </tr>";
 					}
 					else {
-						echo "<tr>
+						echo "<tr id='$game_id' >
 								<td><label class='radio-inline'><input type='radio' name='pick' value='$awayTeam_id'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
 								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
 								<td><label class='radio-inline'><input type='radio' name='pick' value='$homeTeam_id'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
