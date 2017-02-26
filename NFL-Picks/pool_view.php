@@ -16,6 +16,10 @@ $row = mysqli_fetch_assoc($result);
 
 $manager = $row["manager"];
 
+$sql = "SELECT nickname FROM users WHERE email = '$manager'";
+$mgrResult = mysqli_query($conn, $sql);
+$mgrRow = mysqli_fetch_assoc($mgrResult);
+$mgr = $mgrRow['nickname'];
 
 ?>
 <div class="text-center">
@@ -28,25 +32,18 @@ $manager = $row["manager"];
 	<div class="panel-heading">Pool Info</div>
 	<div class="panel-body">
 		<?php if (mysqli_num_rows($result) > 0) { ?>
-		<table class="table table-default">
-            <thead>
-            <tr>
-                <th>Pool</th>
-                <th>Buy In</th>
-                <th>Total Pot</th>
-            </tr>
-            </thead>
-            <tbody>
             <?php
-        		echo "<tr>";
-				echo "<td><img hspace='5' WIDTH='30' src='data:image/jpeg;base64," . base64_encode( $row["pool_image"] ) . 
-						"'/>" . $row["pool_name"] . "</td>";
-				echo "<td>" . $row["buy_in"] . "</td>";
-				echo "<td>" . $row["total_pot"] . "</td>";
-				echo "</tr>";
+                echo "<div class='row>";
+                echo "<div class='header_image clearfix'>";
+                echo "<img style='float:left;' hspace='5' WIDTH='100' src='data:image/jpeg;base64," . base64_encode( $row["pool_image"] ) . "'/>";
+                echo "<h2 style='float:left;'>" . $row["pool_name"] . "</h2>";
+                echo "</div>";
+                echo "<div class='pull-right'>";
+                echo "<span style='float:left; clear:left; font-size:15px;'><strong>Manager: </strong>" . $mgr . "</span>";
+                echo "<span style='float:left; clear:left; font-size:15px;'><strong>Buy In: </strong>" . $row["buy_in"] . " credits</span>";
+				echo "<span style='float:left; clear:left; font-size:15px;'><strong>Total Pot: </strong>" . $row["total_pot"] . " credits</span>";
+                echo "</div>";
             ?>
-        	</tbody>
-        </table>
         <?php } else { ?>
     	<div class="alert alert-warning alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
