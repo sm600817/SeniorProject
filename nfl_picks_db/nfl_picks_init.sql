@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 14, 2017 at 01:52 AM
+-- Generation Time: Feb 27, 2017 at 12:43 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -110,7 +110,7 @@ INSERT INTO `games` (`game_id`, `home_team`, `away_team`, `home_score`, `away_sc
 (69, 10, 1, 0, 0),
 (70, 18, 30, 0, 0),
 (71, 26, 4, 0, 0),
-(72, 28, 13, 0, 0),
+(72, 23, 13, 0, 0),
 (73, 7, 19, 0, 0),
 (74, 3, 27, 0, 0),
 (75, 22, 24, 0, 0),
@@ -321,7 +321,8 @@ CREATE TABLE `picks` (
   `pool_id` int(11) NOT NULL,
   `week` int(11) NOT NULL,
   `game` int(11) NOT NULL,
-  `team` int(11) NOT NULL
+  `team` int(11) NOT NULL,
+  `pts_assigned` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -396,7 +397,7 @@ INSERT INTO `teams` (`team_num`, `team_city`, `team_name`, `team_logo`, `wins`, 
 (8, 'San Francisco', '49ers', '', 0, 0, 0, 18),
 (9, 'Green Bay', 'Packers', '', 0, 0, 0, 31),
 (10, 'Detroit', 'Lions', '', 0, 0, 0, 22),
-(11, 'Minnesota', 'Vikings', '', 0, 1, 0, 18),
+(11, 'Minnesota', 'Vikings', '', 0, 0, 0, 18),
 (12, 'Chicago', 'Bears', '', 0, 0, 0, 17),
 (13, 'Atlanta', 'Falcons', '', 0, 0, 0, 35),
 (14, 'Tampa Bay', 'Buccanneers', '', 0, 0, 0, 21),
@@ -582,7 +583,7 @@ ALTER TABLE `weeks`
 -- AUTO_INCREMENT for table `invites`
 --
 ALTER TABLE `invites`
-  MODIFY `invite_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `invite_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `players`
 --
@@ -592,7 +593,7 @@ ALTER TABLE `players`
 -- AUTO_INCREMENT for table `pools`
 --
 ALTER TABLE `pools`
-  MODIFY `pool_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `pool_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `teams`
 --
