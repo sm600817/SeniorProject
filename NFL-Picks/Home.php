@@ -13,7 +13,7 @@ include 'header.php';
                     <div class="col-sm-3">
     
                         <!-- Profile image to be inserted here -->
-    
+                        <!-- TODO: php code to print actual account info -->
                         <p class="usernamePrint">Temp username</p>
                         <p class="creditsPrint">Credits: 2,000</p>
                         <p class="profileInfo">Info (will be filled via script later)</p>
@@ -29,19 +29,15 @@ include 'header.php';
                     </div>
                     <div class="col-sm-3">
                         <div class="rightInfo">
-                            <a href="">Profile</a>
+                            <a href="profile.php">Profile</a>
                             <p></p>
                             <a href="my_pools.php">Pools</a>
                             <p></p>
-                            <a href="">History</a>
+                            <a href="my_pools.php">History</a>
                             <p></p>
-                            <a href="">Following</a>
+                            <a href="create_pool.php">Create Pool</a>
                             <p></p>
-                            <a href="">Top Scores</a>
-                            <p></p>
-                            <a href="">Predictions</a>
-                            <p></p>
-                            <a href="">Related News</a>
+                            <a href="invites_view.php">Invites</a>
                         </div>
                     </div>
                 </div>
