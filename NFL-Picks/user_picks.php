@@ -23,12 +23,20 @@ Figure out the following where clause
 WHERE user = $member
 */
 
-$sql = "SELECT week, game, team
+$sql = "SELECT pool_id, week, game, team
         FROM picks";
 
+/*
+Join tables
+
+$sql = "SELECT pool_name
+        FROM pools";
+
+$sql = "SELECT team_name
+        FROM teams";
+*/
 
 $pickResult = mysqli_query($conn, $sql);
-
 
 ?>
 
@@ -42,7 +50,8 @@ $pickResult = mysqli_query($conn, $sql);
 					<table class="table table-hover">
 			            <thead>
 			            <tr>
-			                <th>Week Number</th>
+			                <th>Pool Name</th>
+                            <th>Week Number</th>
 			                <th>Team Picked</th>
 			                <th>Credits Won</th>
 			            </tr>
@@ -52,18 +61,22 @@ $pickResult = mysqli_query($conn, $sql);
 			            	while($pickRow = mysqli_fetch_assoc($pickResult)) {
 			            		
                                 /*
-                                TODO Replace $creditsWon = $pickRow['game'];
+                                TODO:
+                                1.Replace $creditsWon = $pickRow['game'];
                                 with the actual amount of credits won
+                                
+                                2. replace pool_id with pool name
+                                
+                                3. replace team with team name
                                 */
+                                $poolName = $pickRow['pool_id'];
                                 $weekNum = $pickRow['week'];
 			            		$teamPicked = $pickRow['team'];
                                 $creditsWon = $pickRow['game'];
 
-                                $sql = "SELECT week, game, team
-                                        FROM picks
-                                        WHERE user = $member";
                                 
 			            		echo "<tr>";
+                                echo "<td>" . $poolName . "</td>";
 			    				echo "<td>" . $weekNum . "</td>";
                                 echo "<td>" . $teamPicked . "</td>";
 			    				echo "<td>" . $creditsWon . "</td>";
