@@ -70,7 +70,7 @@ if(!empty($_POST["week"])){
 						$awayTeam_id = $game_row["away_team"];
 						$awayScore = $game_row["away_score"];
 
-						$sql = "SELECT team_num, team_name
+						$sql = "SELECT team_num, team_name, team_logo, wins, losses, ties
 							FROM teams
 							WHERE team_num = " . $awayTeam_id;
 						$away_result = mysqli_query($conn, $sql);
@@ -80,9 +80,13 @@ if(!empty($_POST["week"])){
 
 							$awayTeam = $team_row["team_name"];
 							$awayId = $team_row["team_num"];
+							$awayLogo = $team_row["team_logo"];
+							$awayWs = $team_row["wins"];
+							$awayLs = $team_row["losses"];
+							$awayTies = $team_row["ties"];
 						}
 
-						$sql = "SELECT team_num, team_name
+						$sql = "SELECT team_num, team_name, team_logo, wins, losses, ties
 							FROM teams
 							WHERE team_num = " . $homeTeam_id;
 						$home_result = mysqli_query($conn, $sql);
@@ -92,45 +96,69 @@ if(!empty($_POST["week"])){
 
 							$homeTeam = $team_row["team_name"];
 							$homeId = $team_row["team_num"];
+							$homeLogo = $team_row["team_logo"];
+							$homeWs = $team_row["wins"];
+							$homeLs = $team_row["losses"];
+							$homeTies = $team_row["ties"];
 						}
 
 						if ($pick == $awayTeam_id) {
 							if($awayScore > $homeScore){
-								echo "<tr id='$game_id' class='success'>
+								echo "<tr height='75' id='$game_id' class='success'>
 										<td><label class='radio-inline'><strong>* $awayTeam</strong></label></td>
-										<td><label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label></td>
+										<td>
+											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "' />
+											<label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label>
+											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+										</td>
 										<td><label class='radio-inline'>$homeTeam</label></td>
 									  </tr>";
 							}
 							else {
-								echo "<tr id='$game_id' class='danger'>
+								echo "<tr height='75' id='$game_id' class='danger'>
 										<td><label class='radio-inline'><strong>* $awayTeam</strong></label></td>
-										<td><label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label></td>
+										<td>
+											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "' />
+											<label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label>
+											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+										</td>
 										<td><label class='radio-inline'>$homeTeam</label></td>
 									  </tr>";
 							}
 						}
 						else if($pick == $homeTeam_id){
 							if($homeScore > $awayScore){
-								echo "<tr id='$game_id' class='success'>
+								echo "<tr height='75' id='$game_id' class='success'>
 										<td><label class='radio-inline'>$awayTeam</label></td>
-										<td><label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label></td>
+										<td>
+											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "' />
+											<label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label>
+											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+										</td>
 										<td><label class='radio-inline'><strong>* $homeTeam</strong></label></td>
 									  </tr>";
 							}
 							else {
-								echo "<tr id='$game_id' class='danger'>
+								echo "<tr height='75' id='$game_id' class='danger'>
 										<td><label class='radio-inline'>$awayTeam</label></td>
-										<td><label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label></td>
+										<td>
+											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "' />
+											<label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label>
+											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+										</td>
 										<td><label class='radio-inline'><strong>* $homeTeam</strong></label></td>
 									  </tr>";
 							}
 						}
 						else{
-							echo "<tr id='$game_id' >
-									<td><label class='radio-inline'>$awayTeam</label></td>
-									<td><label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label></td>
-									<td><label class='radio-inline'>$homeTeam</label></td>
+							echo "<tr height='75' id='$game_id' >
+									<td><label class='radio-inline'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
+									<td>
+										<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "' />
+										<label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label>
+										<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+									</td>
+									<td><label class='radio-inline'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 								  </tr>";
 						}
 
@@ -162,7 +190,7 @@ if(!empty($_POST["week"])){
 						$awayTeam_id = $game_row["away_team"];
 						$awayScore = $game_row["away_score"];
 
-						$sql = "SELECT team_num, team_name, wins, losses, ties
+						$sql = "SELECT team_num, team_name, team_logo, wins, losses, ties
 							FROM teams
 							WHERE team_num = " . $awayTeam_id;
 						$away_result = mysqli_query($conn, $sql);
@@ -172,12 +200,13 @@ if(!empty($_POST["week"])){
 
 							$awayTeam = $team_row["team_name"];
 							$awayId = $team_row["team_num"];
+							$awayLogo = $team_row["team_logo"];
 							$awayWs = $team_row["wins"];
 							$awayLs = $team_row["losses"];
 							$awayTies = $team_row["ties"];
 						}
 
-						$sql = "SELECT team_num, team_name, wins, losses, ties
+						$sql = "SELECT team_num, team_name, team_logo, wins, losses, ties
 							FROM teams
 							WHERE team_num = " . $homeTeam_id;
 						$home_result = mysqli_query($conn, $sql);
@@ -187,6 +216,7 @@ if(!empty($_POST["week"])){
 
 							$homeTeam = $team_row["team_name"];
 							$homeId = $team_row["team_num"];
+							$homeLogo = $team_row["team_logo"];
 							$homeWs = $team_row["wins"];
 							$homeLs = $team_row["losses"];
 							$homeTies = $team_row["ties"];
@@ -229,9 +259,13 @@ if(!empty($_POST["week"])){
 						$awayPick_row = mysqli_fetch_assoc($awayPickWeek_result);
 						$away_ptsAssigned = $awayPick_row['pts_assigned'];
 						if($away_ptsAssigned == 0){
-							echo "<tr id='$game_id' >
+							echo "<tr height='75' id='$game_id' >
 								<td><label class='radio-inline'><input checked='checked' type='radio' name='pick' value='$awayTeam_id'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
-								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
+								<td><label style='padding-left: 15px; padding-right: 15px;'>
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . 
+									"' />at
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+								</label></td>
 								<td><label class='radio-inline'><input type='radio' name='pick' value='$homeTeam_id'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 							  </tr>";
 						}
@@ -240,38 +274,58 @@ if(!empty($_POST["week"])){
 						$homePick_row = mysqli_fetch_assoc($homePickWeek_result);
 						$home_ptsAssigned = $homePick_row['pts_assigned'];
 						if($home_ptsAssigned == 0){
-							echo "<tr id='$game_id' >
+							echo "<tr height='75' id='$game_id' >
 								<td><label class='radio-inline'><input type='radio' name='pick' value='$awayTeam_id'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
-								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
+								<td><label style='padding-left: 15px; padding-right: 15px;'>
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . 
+									"' />at
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+								</label></td>
 								<td><label class='radio-inline'><input checked='checked' type='radio' name='pick' value='$homeTeam_id'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 							  </tr>";
 						}
 					}
 					else if (mysqli_num_rows($homePick_result) > 0 && mysqli_num_rows($awayPick_result) > 0) {
-						echo "<tr id='$game_id' class='danger'>
+						echo "<tr height='75' id='$game_id' class='danger'>
 								<td><label class='radio-inline'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
-								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
+								<td><label style='padding-left: 15px; padding-right: 15px;'>
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . 
+									"' />at
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+								</label></td>
 								<td><label class='radio-inline'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 							  </tr>";
 					}
 					else if(mysqli_num_rows($awayPick_result) > 0) {
-						echo "<tr id='$game_id' class='warning'>
+						echo "<tr height='75' id='$game_id' class='warning'>
 								<td><label class='radio-inline'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
-								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
+								<td><label style='padding-left: 15px; padding-right: 15px;'>
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . 
+									"' />at
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+								</label></td>
 								<td><label class='radio-inline'><input type='radio' name='pick' value='$homeTeam_id'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 							  </tr>";
 					}
 					else if(mysqli_num_rows($homePick_result) > 0) {
-						echo "<tr id='$game_id' class='warning'>
+						echo "<tr height='75' id='$game_id' class='warning'>
 								<td><label class='radio-inline'><input type='radio' name='pick' value='$awayTeam_id'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
-								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
+								<td><label style='padding-left: 15px; padding-right: 15px;'>
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . 
+									"' />at
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+								</label></td>
 								<td><label class='radio-inline'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 							  </tr>";
 					}
 					else {
-						echo "<tr id='$game_id' >
+						echo "<tr height='75' id='$game_id' >
 								<td><label class='radio-inline'><input type='radio' name='pick' value='$awayTeam_id'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
-								<td><label style='padding-left: 15px; padding-right: 15px;'>at</label></td>
+								<td><label style='padding-left: 15px; padding-right: 15px;'>
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . 
+									"' />at
+									<img hspace='25' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
+								</label></td>
 								<td><label class='radio-inline'><input type='radio' name='pick' value='$homeTeam_id'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 							  </tr>";
 					}

@@ -61,11 +61,6 @@ if (mysqli_num_rows($result) > 0) {
 
 	}
 
-	$sql = "UPDATE weeks
-			SET was_played = 1
-			WHERE week_id = $week";
-	mysqli_query($conn, $sql);
-
 	echo "All points have been assigned";
 }
 else{

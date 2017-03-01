@@ -54,7 +54,7 @@
 			}
 
 
-			function simGame(game, awayId, homeId){
+			function simGame(week, game, awayId, homeId){
 				var btnStr = "btn" + game;
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange=function(){
@@ -65,7 +65,7 @@
 					}
 				}//end onreadystatechange
 				
-				var link = "simulate.php?game=" + game + "&awayId=" + awayId + "&homeId=" + homeId;
+				var link = "simulate.php?week=" + week + "&game=" + game + "&awayId=" + awayId + "&homeId=" + homeId;
 
 				xhttp.open("GET", link, true);
 				xhttp.send();

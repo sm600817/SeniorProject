@@ -2,6 +2,7 @@
 
 include __DIR__ . '/../DBConnect.php';
 
+$week = $_GET["week"];
 $gameId = $_GET["game"];
 $awayId = $_GET["awayId"];
 $homeId = $_GET["homeId"];
@@ -91,6 +92,11 @@ else {
 	echo '' . $awayTeam . ' ' . $awayScore . ' - ' .
 		$homeTeam . ' ' . $homeScore;
 }
+
+$sql = "UPDATE weeks
+			SET was_played = 1
+			WHERE week_id = $week";
+mysqli_query($conn, $sql);
 
 $conn->close();
 
