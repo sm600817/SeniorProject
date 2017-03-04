@@ -14,6 +14,8 @@ $sql = "SELECT pool_name, pool_image, buy_in, total_pot, manager
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 
+$pool_name = $row["pool_name"];
+$buy_in = $row["buy_in"];
 $manager = $row["manager"];
 
 $sql = "SELECT nickname FROM users WHERE email = '$manager'";
@@ -29,7 +31,16 @@ $mgr = $mgrRow['nickname'];
     </ul>
 </div>
 <div class="panel panel-default panel-primary" id="pool_info">
-	<div class="panel-heading">Pool Info</div>
+	<div class="panel-heading">Pool Info
+        <div class="pull-right">
+            <?php if ($user === $manager) { ?>
+                <button id="editButton" class="btn btn-info btn-sm" data-toggle='modal' data-target='#editPool'>
+                    Edit Pool <span class="glyphicon glyphicon-pencil">
+                </button>
+            <?php } ?>
+        </div>
+        <div class="clearfix"></div>
+    </div>
 	<div class="panel-body">
 		<?php if (mysqli_num_rows($result) > 0) { ?>
             <?php
@@ -125,6 +136,40 @@ $result = mysqli_query($conn, $sql);
         <?php } ?>
 	</div>
 </div>
+<div id="editPool" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title edit-content">Edit Pool</h4>
+            </div>
+            <div class="modal-body">
+                <form data-toggle="validator" id="pool-form" action="<?php $_PHP_SELF ?>" method="post" role="form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="text" name="pool_name" id="pool_name" tabindex="1" class="form-control" placeholder="Pool Name" value="<?php echo $pool_name; ?>">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
+                    <input type="file" name="pool_img" id="pool_img" tabindex="4" accept=".png, .jpeg, .gif, .jpg" 
+                        class="form-control filestyle" data-buttonBefore="true" data-buttonText="Pool Image" 
+                        data-buttonName="btn-info">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit" name="pool-submit" id="pool-submit" tabindex="3" class="form-control btn btn-success" value="Update">
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="inviteMembers" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -210,4 +255,40 @@ $result = mysqli_query($conn, $sql);
 		});
     }
 </script>
+<?php
+    if(isset($_POST["pool-submit"])){
+        $pool_name = $_POST["pool_name"];
+
+        if($_FILES['pool_img']['size'] > 0){
+            $tmpName  = $_FILES['pool_img']['tmp_name'];
+
+            $fp      = fopen($tmpName, 'r');
+            $content = fread($fp, filesize($tmpName));
+            $content = addslashes($content);
+            fclose($fp);
+
+            $sql = "UPDATE pools 
+                SET pool_name = '$pool_name', pool_image = '$content' 
+                WHERE pool_id = $poolId";
+        }
+        else {
+            $sql = "UPDATE pools 
+                SET pool_name = '$pool_name' 
+                WHERE pool_id = $poolId";
+        }
+
+        if(mysqli_query($conn, $sql)){
+            $url = "Location: pool_view.php?pool=" . $poolId . "";
+            header($url);
+        }
+        else {
+            echo "<div class='alert alert-danger alert-dismissible'>
+                    <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                    <strong>Error!</strong>" . mysqli_error($conn) . 
+                 "</div>";
+        }
+
+
+    }
+?>
 <?php include "footer.php"; ?>
