@@ -37,6 +37,10 @@ $mgr = $mgrRow['nickname'];
                 <button id="editButton" class="btn btn-info btn-sm" data-toggle='modal' data-target='#editPool'>
                     Edit Pool <span class="glyphicon glyphicon-pencil">
                 </button>
+            <?php } else{ ?>
+                <button id="leaveButton" class="btn btn-danger btn-sm" data-toggle='modal' data-target='#leavePool'>
+                    Leave Pool <span class="glyphicon glyphicon-log-out">
+                </button>
             <?php } ?>
         </div>
         <div class="clearfix"></div>
@@ -200,6 +204,31 @@ $result = mysqli_query($conn, $sql);
         </div>
     </div>
 </div>
+<div id="leavePool" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title edit-content">Confirm</h4>
+            </div>
+            <div class="modal-body">
+                <h3>Are you sure you want to leave the pool?</h3>
+                <form action="javascript:leave()" data-toggle="validator" role="form">
+                    <div class="form-group">
+                        <input class="btn btn-success" type="submit" name="submit" value="Yes, Leave"/>
+                        <input name="poolId_leave" id="poolId_leave" type="number" class="form-control" value="<?php echo $poolId; ?>" style="display:none;"/>
+                        <input name="buyIn" id="buyIn" type="number" class="form-control" value="<?php echo $buy_in; ?>" style="display:none;"/>
+                    </div>
+                    <span id="leaveMessage" class="hidden"></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
 	var fieldNum = 1;
 	
@@ -253,6 +282,27 @@ $result = mysqli_query($conn, $sql);
 		     $('#message').html(msg);
 		   }
 		});
+    }
+
+    function leave() {
+        var poolId = document.getElementById("poolId_leave").value;
+        var buyIn = document.getElementById("buyIn").value;
+
+        $.ajax({
+           type: "POST",
+           data: { pool: poolId,
+                   buyIn: buyIn },
+           url: "leave.php",
+           success: function(msg){
+             if(msg === "my_pools.php"){
+                document.location.href = msg;
+             }
+             else{
+                $("#leaveMessage").removeClass('hidden');
+                $('#leaveMessage').html(msg);
+             }
+           }
+        });
     }
 </script>
 <?php
