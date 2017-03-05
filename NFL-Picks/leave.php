@@ -15,8 +15,11 @@ if (mysqli_query($conn, $sql)){
 	$sql = "UPDATE users
 			SET credits = credits + $buyIn
 			WHERE email = '$user'";
-	$result = mysqli_query($conn, $sql);
 	if (mysqli_query($conn, $sql)){
+		$sql = "UPDATE pools
+				SET total_pot = total_pot - $buyIn";
+		mysqli_query($conn, $sql);
+		
 		echo "my_pools.php";
 	}
 	else{
