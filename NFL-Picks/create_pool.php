@@ -16,8 +16,8 @@ include 'header.php';
 				<div class="form-group">
 					<input type="hidden" name="MAX_FILE_SIZE" value="2000000">
 					<input type="file" name="pool_img" id="pool_img" tabindex="4" accept=".png, .jpeg, .gif, .jpg" 
-						class="form-control filestyle" data-buttonBefore="true" data-buttonText="Pool Image" 
-						data-buttonName="btn-info" required>
+						class="form-control filestyle" data-buttonBefore="true" data-buttonText="Pool Image (optional)" 
+						data-buttonName="btn-info">
 				</div>
 				<div class="form-group">
 					<input type="number" name="buy_in" id="buy_in" tabindex="2" class="form-control" placeholder="Buy In" required>
@@ -34,17 +34,24 @@ include 'header.php';
 	</div>
 </div>
 <?php
-	if(isset($_POST["pool-submit"]) && $_FILES['pool_img']['size'] > 0){
+	if(isset($_POST["pool-submit"])){
 		$manager = $_SESSION["email"];
 		$pool_name = $_POST["pool_name"];
 		$buy_in = $_POST["buy_in"];
 
-		$tmpName  = $_FILES['pool_img']['tmp_name'];
+		if($_FILES['pool_img']['size'] > 0){
+			$tmpName  = $_FILES['pool_img']['tmp_name'];
 
-		$fp      = fopen($tmpName, 'r');
-		$content = fread($fp, filesize($tmpName));
-		$content = addslashes($content);
-		fclose($fp);
+			$fp      = fopen($tmpName, 'r');
+			$content = fread($fp, filesize($tmpName));
+			$content = addslashes($content);
+			fclose($fp);
+		}
+		else{
+			$file = "Defaults/default-pool.png";
+			$content = File_Get_Contents($file);
+			$content = addslashes($content);
+		}
 
 		$sql = "INSERT INTO pools(manager, pool_name, pool_image, buy_in, total_pot) 
 				VALUES ('$manager', '$pool_name', '$content', '$buy_in', '$buy_in')";

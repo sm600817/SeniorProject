@@ -77,8 +77,8 @@ include 'header.php';
 								<div class="form-group">
 									<input type="hidden" name="MAX_FILE_SIZE" value="2000000">
 									<input type="file" name="pic" id="pic" tabindex="4" accept=".png, .jpeg, .gif, .jpg" 
-										class="form-control filestyle" data-buttonBefore="true" data-buttonText="Profile Picture" 
-										data-buttonName="btn-info" required>
+										class="form-control filestyle" data-buttonBefore="true" data-buttonText="Profile Picture (optional)" 
+										data-buttonName="btn-info">
 								</div>
 								<div class="form-group">
 									<input type="email" name="email" id="email" tabindex="5" class="form-control" placeholder="Email Address" 
@@ -104,19 +104,28 @@ include 'header.php';
 				</div>
 			</div>
 			<?php
-				if(isset($_POST["register-submit"]) && $_FILES['pic']['size'] > 0){
+				if(isset($_POST["register-submit"])){
 					$first_name = $_POST["first_name"];
 					$last_name = $_POST["last_name"];
 					$nickname = $_POST["nickname"];
 					$email = $_POST["email"];
 					$password = $_POST["password"];
 
-					$tmpName  = $_FILES['pic']['tmp_name'];
+					if($_FILES['pic']['size'] > 0){
+						$tmpName  = $_FILES['pic']['tmp_name'];
 
-					$fp      = fopen($tmpName, 'r');
-					$content = fread($fp, filesize($tmpName));
-					$content = addslashes($content);
-					fclose($fp);
+						$fp      = fopen($tmpName, 'r');
+						$content = fread($fp, filesize($tmpName));
+						$content = addslashes($content);
+						fclose($fp);
+					}
+					else {
+						$file = "Defaults/user-pic-default.png";
+						$content = File_Get_Contents($file);
+						$content = addslashes($content);
+					}
+
+					
 
 					$sql = "INSERT INTO users(first_name, last_name, nickname, email, prof_pic, password, credits) 
 							VALUES ('$first_name', '$last_name', '$nickname', '$email', '$content', '$password', 100)";
@@ -127,9 +136,9 @@ include 'header.php';
 					         </div>";
 					}
 					else {
-						echo "<div class='alert alert-success alert-dismissible'>
+						echo "<div class='alert alert-danger alert-dismissible'>
 					            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-					            <strong>Sorry!</strong> There was a problem. Please try again
+					            <strong>Sorry!</strong> An account already exists with that email
 					          </div>";
 					}
 
