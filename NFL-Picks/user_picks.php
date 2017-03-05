@@ -15,26 +15,16 @@ $sql = "SELECT pool_name, pool_image, buy_in, total_pot, manager
 		WHERE pool_id = $poolId";
 
 $result = mysqli_query($conn, $sql);
+$poolRow = mysqli_fetch_assoc($result);
+$poolName = $poolRow["pool_name"];
 
 $member = $_POST["member"];
 
-/*
-Figure out the following where clause
-WHERE user = $member
-*/
-
 $sql = "SELECT pool_id, week, game, team
-        FROM picks";
+        FROM picks
+        WHERE user = '$member'
+            AND pool_id = $poolId";
 
-/*
-Join tables
-
-$sql = "SELECT pool_name
-        FROM pools";
-
-$sql = "SELECT team_name
-        FROM teams";
-*/
 
 $pickResult = mysqli_query($conn, $sql);
 
@@ -53,33 +43,41 @@ $pickResult = mysqli_query($conn, $sql);
 			                <th>Pool Name</th>
                             <th>Week Number</th>
 			                <th>Team Picked</th>
-			                <th>Credits Won</th>
+			                <th>Points</th>
 			            </tr>
 			            </thead>
 			            <tbody>
 			            <?php
 			            	while($pickRow = mysqli_fetch_assoc($pickResult)) {
 			            		
-                                /*
-                                TODO:
-                                1.Replace $creditsWon = $pickRow['game'];
-                                with the actual amount of credits won
-                                
-                                2. replace pool_id with pool name
-                                
-                                3. replace team with team name
-                                */
-                                $poolName = $pickRow['pool_id'];
                                 $weekNum = $pickRow['week'];
-			            		$teamPicked = $pickRow['team'];
-                                $creditsWon = $pickRow['game'];
-
                                 
-			            		echo "<tr>";
+                                $teamNum = $pickRow['team'];
+                                $sql = "SELECT team_name, team_logo
+                                        FROM teams
+                                        WHERE team_num = $teamNum";
+                                        
+
+                                $teamResult = mysqli_query($conn, $sql);
+                                $teamRow = mysqli_fetch_assoc($teamResult);
+                                $teamName = $teamRow["team_name"];
+                                $teamLogo = $teamRow["team_logo"];
+                                
+                                //$scores = $scoresRow[''];
+                                
+                                $game_id = $pickRow['game'];
+                                
+                                $sql = "SELECT home_score, away_score
+                                        FROM games
+                                        WHERE game_id = $game_id";
+                                
+                                //if statement
+                                
+			            		echo "<tr height='65'>";
                                 echo "<td>" . $poolName . "</td>";
 			    				echo "<td>" . $weekNum . "</td>";
-                                echo "<td>" . $teamPicked . "</td>";
-			    				echo "<td>" . $creditsWon . "</td>";
+                                echo "<td> <img style='float:left;' hspace='5' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $teamLogo ) . "'/>" .$teamName . "</td>";
+			    				echo "<td>" . $game_id . "</td>";
 			    				echo "</tr>";
 			    			}
 			            ?>
