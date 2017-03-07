@@ -10,7 +10,7 @@ include 'header.php';
 
 $poolId = $_POST["pool"];
 
-$sql = "SELECT pool_name, pool_image, buy_in, total_pot, manager
+$sql = "SELECT pool_name
 		FROM pools
 		WHERE pool_id = $poolId";
 
@@ -29,11 +29,19 @@ $sql = "SELECT pool_id, week, game, team
 $pickResult = mysqli_query($conn, $sql);
 
 
-$sql = "SELECT nickname, prof_pic, credits
+$sql = "SELECT nickname, prof_pic
         FROM users
-        WHERE email = '$user'";
+        WHERE email = '$member'";
 
 $userResult = mysqli_query($conn, $sql);
+$userRow = mysqli_fetch_assoc($userResult);
+
+$sql = "SELECT total_score
+		FROM scores
+		WHERE pool_id = $poolId
+		AND user = '$member'";
+$scoreResult = mysqli_query($conn, $sql);
+$scoreRow = mysqli_fetch_assoc($scoreResult);
 
 ?>
 
@@ -42,25 +50,19 @@ $userResult = mysqli_query($conn, $sql);
 <div class="panel panel-default panel-primary" id="pool_info">
 	<div class="panel-heading">User Info</div>
 	<div class="panel-body">
-		<?php if (mysqli_num_rows($result) > 0) { ?>
-            <?php
+		<?php if (mysqli_num_rows($result) > 0) {
             
-            while($userRow = mysqli_fetch_assoc($userResult)){
-               
-                echo "<div class='row>";
-                echo "<div class='header_image clearfix'>";
-                echo "<img style='float:left;' hspace='5' WIDTH='75' src='data:image/jpeg;base64," . base64_encode( $userRow["prof_pic"] ) . "'/>";
-                echo "<h2 style='float:left;'>" . $userRow["nickname"] . "</h2>";
-                echo "</div>";
-                echo "<div class='pull-right'>";
-                echo "<span style='float:left; clear:left; font-size:15px;'><strong>Contact Info: </strong>" . $member . "</span>";
-                echo "<span style='float:left; clear:left; font-size:15px;'><strong>Pool Name: </strong>" . $poolRow["pool_name"] . " </span>";
-				echo "<span style='float:left; clear:left; font-size:15px;'><strong>Credits: </strong>" . $userRow["credits"] . " credits</span>";
-                echo "</div>";
-            }
+            echo "<div class='row>";
+            echo "<div class='header_image clearfix'>";
+            echo "<img style='float:left;' hspace='5' WIDTH='75' src='data:image/jpeg;base64," . base64_encode( $userRow["prof_pic"] ) . "'/>";
+            echo "<h2 style='float:left;'>" . $userRow["nickname"] . "</h2>";
+            echo "</div>";
+            echo "<div class='pull-right'>";
+            echo "<span style='float:left; clear:left; font-size:15px;'><strong>Pool: </strong>" . $poolName . " </span>";
+			echo "<span style='float:left; clear:left; font-size:15px;'><strong>Total Points: </strong>" . $scoreRow["total_score"] . "</span>";
+            echo "</div>";
     
-            ?>
-        <?php } else { ?>
+        } else { ?>
     	<div class="alert alert-warning alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>No Info!</strong> Cannot find information for this user
