@@ -58,7 +58,7 @@ $scoreRow = mysqli_fetch_assoc($scoreResult);
             echo "<h2 style='float:left;'>" . $userRow["nickname"] . "</h2>";
             echo "</div>";
             echo "<div class='pull-right'>";
-            echo "<span style='float:left; clear:left; font-size:15px;'><strong>Pool: </strong>" . $poolName . " </span>";
+            echo "<span style='float:left; clear:left; font-size:15px;'><strong>Pool: </strong><a href='pool_view.php?pool=" . $poolId . "'>" . $poolName . "</a></span>";
 			echo "<span style='float:left; clear:left; font-size:15px;'><strong>Total Points: </strong>" . $scoreRow["total_score"] . "</span>";
             echo "</div>";
     
@@ -73,7 +73,7 @@ $scoreRow = mysqli_fetch_assoc($scoreResult);
 
 <!-- EVERYTHING BELOW GOOD(except i need an if statment) -->
 <div class="panel panel-default panel-primary">
-	<div class="panel-heading">My Picks</div>
+	<div class="panel-heading">Picks</div>
 	<div class="panel-body">
 		<div role="tabpanel">
             <div class="tab-content">
