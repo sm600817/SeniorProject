@@ -23,6 +23,16 @@ $mgrResult = mysqli_query($conn, $sql);
 $mgrRow = mysqli_fetch_assoc($mgrResult);
 $mgr = $mgrRow['nickname'];
 
+$inPool = false;
+$sql = "SELECT user
+        FROM scores
+        WHERE pool_id = $poolId
+        AND user = '$user'";
+$poolResult = mysqli_query($conn, $sql);
+if (mysqli_num_rows($poolResult) > 0){
+    $inPool = true;
+}
+
 ?>
 <div class="text-center">
     <ul class="nav nav-pills" style="display: inline-block;">
@@ -37,7 +47,7 @@ $mgr = $mgrRow['nickname'];
                 <button id="editButton" class="btn btn-info btn-sm" data-toggle='modal' data-target='#editPool'>
                     Edit Pool <span class="glyphicon glyphicon-pencil">
                 </button>
-            <?php } else{ ?>
+            <?php } else if($inPool){ ?>
                 <button id="leaveButton" class="btn btn-danger btn-sm" data-toggle='modal' data-target='#leavePool'>
                     Leave Pool <span class="glyphicon glyphicon-log-out">
                 </button>
