@@ -45,8 +45,6 @@ $scoreRow = mysqli_fetch_assoc($scoreResult);
 
 ?>
 
-<!-- 		if (mysqli_num_rows($result) > 0) -->
-
 <div class="panel panel-default panel-primary" id="pool_info">
 	<div class="panel-heading">User Info</div>
 	<div class="panel-body">
@@ -104,21 +102,37 @@ $scoreRow = mysqli_fetch_assoc($scoreResult);
                                 $teamName = $teamRow["team_name"];
                                 $teamLogo = $teamRow["team_logo"];
                                 
-                                //$scores = $scoresRow[''];
-                                
                                 $game_id = $pickRow['game'];
                                 
-                                $sql = "SELECT home_score, away_score
+                                $sql = "SELECT home_team, away_team, home_score, away_score
                                         FROM games
                                         WHERE game_id = $game_id";
+                                $gamesResult = mysqli_query($conn, $sql);
+                                $gamesRow = mysqli_fetch_assoc($gamesResult);
                                 
-                                //if statement
+                                $homeTeam = $gamesRow['home_team'];
+                                $homeScore = $gamesRow['home_score'];
+                                
+                                $awayTeam = $gamesRow['away_team'];
+                                $awayScore = $gamesRow['away_score'];
+                                
+                                $loss = 0;
                                 
 			            		echo "<tr height='65'>";
 			    				echo "<td>" . $weekNum . "</td>";
                                 echo "<td> <img style='float:left;' hspace='5' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $teamLogo ) . "'/>" .$teamName . "</td>";
-			    				echo "<td>" . $game_id . "</td>";
-			    				echo "</tr>";
+			    				
+                                if($teamNum == $homeTeam && $homeScore > $awayScore){
+                                    echo "<td>" . $homeScore . "</td>";
+                                }
+                                else if($teamNum == $awayTeam && $homeScore < $awayScore){
+                                    echo "<td>" . $awayScore . "</td>";
+                                }
+			    				else{
+                                    echo "<td>" . $loss . "</td>";
+                                }
+                                
+                                echo "</tr>";
 			    			}
 			            ?>
 			        	</tbody>
