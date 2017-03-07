@@ -37,7 +37,9 @@ if (mysqli_num_rows($poolResult) > 0){
 <div class="text-center">
     <ul class="nav nav-pills" style="display: inline-block;">
       <li class="active"><a href="#pool_info">Pool</a></li>
-      <li><a href="my_picks.php?pool=<?php echo $poolId; ?>">My Picks</a></li>
+      <?php if($inPool){ ?>
+        <li><a href="my_picks.php?pool=<?php echo $poolId; ?>">My Picks</a></li>
+      <?php } ?>
     </ul>
 </div>
 <div class="panel panel-default panel-primary" id="pool_info">
