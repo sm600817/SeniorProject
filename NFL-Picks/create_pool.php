@@ -1,6 +1,6 @@
 <?php
 $title = 'Pools';
-$page = 'Pools';
+$page = 'Create Pool';
 include 'header.php';
 
 ?>
@@ -20,6 +20,12 @@ include 'header.php';
 						data-buttonName="btn-info">
 				</div>
 				<div class="form-group">
+					<select class="selectpicker" name="access" id="waccess" data-style="btn-info" data-width="fit" required>
+						<option selected='selected' value='Private'>Private</option>
+						<option value='Public'>Public</option>
+					 </select>
+				</div>
+				<div class="form-group">
 					<input type="number" name="buy_in" id="buy_in" tabindex="2" class="form-control" placeholder="Buy In" required>
 				</div>
 				<div class="form-group">
@@ -37,6 +43,7 @@ include 'header.php';
 	if(isset($_POST["pool-submit"])){
 		$manager = $_SESSION["email"];
 		$pool_name = $_POST["pool_name"];
+		$access = $_POST["access"];
 		$buy_in = $_POST["buy_in"];
 
 		if($_FILES['pool_img']['size'] > 0){
@@ -53,8 +60,8 @@ include 'header.php';
 			$content = addslashes($content);
 		}
 
-		$sql = "INSERT INTO pools(manager, pool_name, pool_image, buy_in, total_pot) 
-				VALUES ('$manager', '$pool_name', '$content', '$buy_in', '$buy_in')";
+		$sql = "INSERT INTO pools(manager, access, pool_name, pool_image, buy_in, total_pot) 
+				VALUES ('$manager', '$access', '$pool_name', '$content', '$buy_in', '$buy_in')";
 
 		if(mysqli_query($conn, $sql)){
 			$lastId = mysqli_insert_id($conn);

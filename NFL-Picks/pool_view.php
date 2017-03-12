@@ -7,7 +7,7 @@ include 'header.php';
 
 $poolId = $_GET["pool"];
 
-$sql = "SELECT pool_name, pool_image, buy_in, total_pot, manager
+$sql = "SELECT pool_name, pool_image, buy_in, total_pot, manager, access
 		FROM pools
 		WHERE pool_id = $poolId";
 
@@ -17,6 +17,7 @@ $row = mysqli_fetch_assoc($result);
 $pool_name = $row["pool_name"];
 $buy_in = $row["buy_in"];
 $manager = $row["manager"];
+$access = $row["access"];
 
 $sql = "SELECT nickname FROM users WHERE email = '$manager'";
 $mgrResult = mysqli_query($conn, $sql);
@@ -60,10 +61,15 @@ if (mysqli_num_rows($poolResult) > 0){
 	<div class="panel-body">
 		<?php if (mysqli_num_rows($result) > 0) { ?>
             <?php
-                echo "<div class='row>";
-                echo "<div class='header_image clearfix'>";
                 echo "<img style='float:left;' hspace='5' WIDTH='100' src='data:image/jpeg;base64," . base64_encode( $row["pool_image"] ) . "'/>";
+                echo "<div style='display: inline-block;'>";
                 echo "<h2 style='float:left;'>" . $row["pool_name"] . "</h2>";
+                if($access == "Private"){
+                    echo "<h5><span class='label label-warning'> $access </span></h5>";
+                }
+                else if($access == "Public"){
+                    echo "<h5><span class='label label-success'> $access </span></h5>";
+                }
                 echo "</div>";
                 echo "<div class='pull-right'>";
                 echo "<span style='float:left; clear:left; font-size:15px;'><strong>Manager: </strong>" . $mgr . "</span>";

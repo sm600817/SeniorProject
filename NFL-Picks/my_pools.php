@@ -1,6 +1,6 @@
 <?php
 $title = 'Pools';
-$page = 'Pools';
+$page = 'My Pools';
 include 'header.php';
 ?>
 <?php

@@ -53,14 +53,17 @@
             <?php if($title != "Log In"): ?>
             <ul class="nav navbar-nav">
                 <li <?php if($page == 'Home') echo 'class = active'; ?>><a href="Home.php">Home</a></li>
-                <li <?php if($page == 'Pools') echo 'class = active ';?>dropdown>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pools
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="my_pools.php">My Pools</a></li>
-                        <li><a href="create_pool.php">Create Pool</a></li>
-                    </ul>
+                <li <?php if($page == 'My Pools') echo 'class = active ';?>><a href="my_pools.php">My Pools</a></li>
+                <li <?php if($page == 'Create Pool') echo 'class = active ';?>><a href="create_pool.php">Create Pool</a></li>
+                <li <?php if($page == 'Find Pools') echo 'class = active ';?>>
+                    <form class="navbar-form" role="search" action="search_pools.php" method="post">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search Pools" name="pool-srch" id="pool-srch">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

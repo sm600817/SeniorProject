@@ -29,7 +29,8 @@ foreach($invitees as $invitee){
 
     $sql = "SELECT pool_id
             FROM scores
-            WHERE user = '$invitee'";
+            WHERE user = '$invitee'
+            AND pool_id = $poolId";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0){
         echo "<div class='alert alert-warning alert-dismissible'>
