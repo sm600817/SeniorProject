@@ -42,6 +42,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <script type="text/javascript" src="/SeniorProject/bootstrap/bootstrap-filestyle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
 
 </head>
 <body>
@@ -56,7 +58,7 @@
                 <li <?php if($page == 'My Pools') echo 'class = active ';?>><a href="my_pools.php">My Pools</a></li>
                 <li <?php if($page == 'Create Pool') echo 'class = active ';?>><a href="create_pool.php">Create Pool</a></li>
                 <li <?php if($page == 'Find Pools') echo 'class = active ';?>>
-                    <form class="navbar-form" role="search" action="search_pools.php" method="post">
+                    <form class="navbar-form" role="search" action="search_pools.php" method="get">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search Pools" name="pool-srch" id="pool-srch">
                             <div class="input-group-btn">

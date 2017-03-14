@@ -48,6 +48,18 @@
       background-color: #953b39;
     }
 
+    .badge-success {
+        background-color: #5cb85c;
+    }
+
+    .badge-warning {
+        background-color: #f0ad4e;;
+    }
+
+    .dataTables_filter {
+        display: none; 
+    }
+
 
 </style>
 <footer class="footer">

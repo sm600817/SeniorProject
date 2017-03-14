@@ -20,7 +20,7 @@ include 'header.php';
 						data-buttonName="btn-info">
 				</div>
 				<div class="form-group">
-					<select class="selectpicker" name="access" id="waccess" data-style="btn-info" data-width="fit" required>
+					<select class="selectpicker" name="access" id="access" data-style="btn-info" data-width="fit" required>
 						<option selected='selected' value='Private'>Private</option>
 						<option value='Public'>Public</option>
 					 </select>
