@@ -107,7 +107,9 @@ if(isset($_GET["pool-srch"])){
 							"'/>" . $mgr . "</td>";
 					echo "<td>" . $buy_in . "</td>";
 					echo "<td>" . $total_pot . "</td>";
-					echo "<td><button id='joinButton' class='btn btn-primary btn-sm'>
+					echo "<td><button id='joinButton' class='btn btn-primary btn-sm' 
+								data-toggle='modal' data-target='#joinPool' data-pool='$pool_id' 
+								data-poolname='$pool_name' data-buyin='$buy_in'>
                     			Join</button></td>";
 					echo "</tr>";
 				}
@@ -136,6 +138,31 @@ if(isset($_GET["pool-srch"])){
     </form>
 </div>
 <?php } ?>
+<div id="joinPool" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title edit-content">Confirm</h4>
+            </div>
+            <div class="modal-body">
+                <h3 id="modal_msg"></h3>
+                <form action="javascript:join()" data-toggle="validator" role="form">
+                    <div class="form-group">
+                        <input class="btn btn-success" type="submit" name="submit" value="Yes, Join"/>
+                        <input name="poolId_join" id="poolId_join" type="number" class="form-control" style="display:none;"/>
+                        <input name="buyIn" id="buyIn" type="number" class="form-control" style="display:none;"/>
+                    </div>
+                    <span id="joinMessage" class="hidden"></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 
 $(document).ready(function() {
@@ -169,8 +196,39 @@ $(document).ready(function() {
 		}
 	});
 
+	$('#joinPool').on('shown.bs.modal', function(e) {
+			var $modal = $(this);
+	  		var poolId = e.relatedTarget.dataset.pool;
+	  		var poolName = e.relatedTarget.dataset.poolname;
+	  		var buyIn = e.relatedTarget.dataset.buyin;
+	  		document.getElementById("modal_msg").innerHTML = "Are you sure you want to join " + poolName + "?";
+	  		document.getElementById("poolId_join").value = poolId;
+	  		document.getElementById("buyIn").value = buyIn;
+	});
+
 
 });
+
+function join() {
+        var poolId = document.getElementById("poolId_join").value;
+        var buyIn = document.getElementById("buyIn").value;
+
+        $.ajax({
+           type: "POST",
+           data: { pool: poolId,
+                   buyIn: buyIn },
+           url: "join.php",
+           success: function(msg){
+             if(msg === "success"){
+                document.location.reload();
+             }
+             else{
+                $("#joinMessage").removeClass('hidden');
+                $('#joinMessage').html(msg);
+             }
+           }
+        });
+}
 
 
 function showPool(pool){
