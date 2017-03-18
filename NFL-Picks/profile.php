@@ -161,7 +161,9 @@ include 'header.php';
     function cancel(){
         var inputs = document.getElementsByTagName('input');
         for(i=0;i<inputs.length;i++){
-            inputs[i].disabled=true;
+            if(inputs[i].id != 'pool-srch'){
+               inputs[i].disabled=true; 
+            }
         }
 
         var edit = document.getElementById("edit");
