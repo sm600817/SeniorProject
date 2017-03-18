@@ -114,6 +114,7 @@ $result = mysqli_query($conn, $sql);
             <tr>
                 <th>Member</th>
                 <th>Points</th>
+                <?php if($user == $manager){ echo "<th></th>"; } ?>
             </tr>
             </thead>
             <tbody>
@@ -144,6 +145,12 @@ $result = mysqli_query($conn, $sql);
     				echo "<td><img hspace='5' WIDTH='30' src='data:image/jpeg;base64," . base64_encode( $member_pic ) . 
     						"'/><a style='cursor:pointer' onclick='postData($form)'>" . $nickname . "</a></td>";
     				echo "<td>" . $row["total_score"] . "</td>";
+                    if($user == $manager && $member != $manager){
+                        echo "<td><button id='removeButton' class='btn btn-danger btn-sm' 
+                                data-toggle='modal' data-target='#removeMember' data-pool='$poolId' 
+                                data-member='$member' data-nickname='$nickname' data-buyin='$buy_in'>
+                                Remove</button></td>";
+                    }
     				echo "</tr>";
                     $form++;
     			}
@@ -247,6 +254,32 @@ $result = mysqli_query($conn, $sql);
         </div>
     </div>
 </div>
+<div id="removeMember" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title edit-content">Confirm</h4>
+            </div>
+            <div class="modal-body">
+                <h3 id="modal_msg"></h3>
+                <form action="javascript:remove()" data-toggle="validator" role="form">
+                    <div class="form-group">
+                        <input class="btn btn-success" type="submit" name="submit" value="Yes, Remove"/>
+                        <input name="poolId_remove" id="poolId_remove" type="number" class="form-control" style="display:none;"/>
+                        <input name="member_remove" id="member_remove" type="email" class="form-control" style="display:none;"/>
+                        <input name="buyIn_remove" id="buyIn_remove" type="number" class="form-control" style="display:none;"/>
+                    </div>
+                    <span id="removeMessage" class="hidden"></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
 	var fieldNum = 1;
 	
@@ -258,6 +291,18 @@ $result = mysqli_query($conn, $sql);
 	  		console.log(poolId);
 	  		document.getElementById("poolId").value = poolId;
 		});
+
+        $('#removeMember').on('shown.bs.modal', function(e) {
+            var $modal = $(this);
+            var poolId = e.relatedTarget.dataset.pool;
+            var nickname = e.relatedTarget.dataset.nickname;
+            var member = e.relatedTarget.dataset.member;
+            var buyIn = e.relatedTarget.dataset.buyin;
+            document.getElementById("modal_msg").innerHTML = "Are you sure you want to remove " + nickname + "?";
+            document.getElementById("poolId_remove").value = poolId;
+            document.getElementById("member_remove").value = member;
+            document.getElementById("buyIn_remove").value = buyIn;
+        });
 	});
 
     function postData(form){
@@ -300,6 +345,29 @@ $result = mysqli_query($conn, $sql);
 		     $('#message').html(msg);
 		   }
 		});
+    }
+
+    function remove() {
+        var poolId = document.getElementById("poolId_remove").value;
+        var buyIn = document.getElementById("buyIn_remove").value;
+        var member = document.getElementById("member_remove").value;
+
+        $.ajax({
+           type: "POST",
+           data: { pool: poolId,
+                   buyIn: buyIn,
+                   member: member },
+           url: "remove.php",
+           success: function(msg){
+             if(msg === "success"){
+                document.location.reload();
+             }
+             else{
+                $("#removeMessage").removeClass('hidden');
+                $('#removeMessage').html(msg);
+             }
+           }
+        });
     }
 
     function leave() {
