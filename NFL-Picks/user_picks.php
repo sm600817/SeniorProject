@@ -139,7 +139,7 @@ $scoreRow = mysqli_fetch_assoc($scoreResult);
 			        </table>
 			    	<?php } else { ?>
 			    	<div class="alert alert-warning alert-dismissible">
-			            <strong>No Picks!</strong> Please submit picks
+			            <strong>No Picks!</strong> This member has not made any picks
 			        </div>
 			        <?php } ?>
 			    </div>
