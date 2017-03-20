@@ -102,10 +102,8 @@ include 'header.php';
                                             <option value="5">What is your favorite food?</option>
                                             <option value="6">What was the make and model of your first car?</option>
                                         </select>
+                                        <input type="text" name="A1" id="A1" tabindex="6" class="form-control" placeholder="Answer One" value="" required>
                                     </div>
-                                    <div class="form-group col-xs-6">
-										<input type="text" name="A1" id="A2" tabindex="6" class="form-control" placeholder="Answer One" value="" required>
-									</div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-xs-6">
@@ -117,10 +115,8 @@ include 'header.php';
                                             <option value="11">What is your favorite food?</option>
                                             <option value="12">What was the make and model of your first car?</option>
                                         </select>
+                                        <input type="text" name="A2" id="A2" tabindex="7" class="form-control" placeholder="Answer Two" value="" required>
                                     </div>
-                                    <div class="form-group col-xs-6">
-										<input type="text" name="A2" id="A2" tabindex="7" class="form-control" placeholder="Answer Two" value="" required>
-									</div>
                                 </div>
                                 
                                 <div class="form-group">
@@ -135,6 +131,7 @@ include 'header.php';
 					</div>
 				</div>
 			</div>
+			<br>
 			<?php
 				if(isset($_POST["register-submit"])){
 					$first_name = $_POST["first_name"];

@@ -7,22 +7,24 @@
 
     session_start();
 
-    $user  = $_SESSION['email'];
+    if(isset($_SESSION['email'])){
+        $user = $_SESSION['email'];
 
-    $sql = "SELECT credits
+        $sql = "SELECT credits
             FROM users
             WHERE email = '$user'";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $credits = $row['credits'];
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $credits = $row['credits'];
 
-    $sql = "SELECT COUNT(invite_id) AS count
-            FROM invites
-            WHERE recipient_id = '$user' AND was_read = 0";
+        $sql = "SELECT COUNT(invite_id) AS count
+                FROM invites
+                WHERE recipient_id = '$user' AND was_read = 0";
 
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $unread = $row["count"];
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $unread = $row["count"];
+    }
 
 ?>
 <html lang="en">
