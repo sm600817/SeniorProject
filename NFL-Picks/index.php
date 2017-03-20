@@ -91,10 +91,9 @@ include 'header.php';
 										data-error="Minimum 8 characters" required>
 									<div class="help-block with-errors"></div>
 								</div>
-                                
-                                <div class="row">
-                                    <div class="form-group col-xs-6">
-                                        <select class="selectpicker" title="Security Question One" name="Q1" id="Q1" data-width="auto">
+                                <div class="form-group input-group">
+                                	<div class="input-group-btn">
+                                    	<select class="selectpicker" title="Security Question One" name="Q1" id="Q1" data-width="100%">
                                             <option value="1">What is your mother's maiden name?</option>
                                             <option value="2">What is the name of your first pet?</option>
                                             <option value="3">Who is your favorite football player?</option>
@@ -102,12 +101,12 @@ include 'header.php';
                                             <option value="5">What is your favorite food?</option>
                                             <option value="6">What was the make and model of your first car?</option>
                                         </select>
-                                        <input type="text" name="A1" id="A1" tabindex="6" class="form-control" placeholder="Answer One" value="" required>
-                                    </div>
+                                	</div>
+                                	<input type="text" name="A1" id="A1" tabindex="6" class="form-control" placeholder="Answer One" value="" required>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-xs-6">
-                                        <select class="selectpicker" title="Security Question Two" name="Q2" id="Q2" data-width="auto">
+                                <div class="form-group input-group">
+                                	<div class="input-group-btn">
+                                        <select class="selectpicker" title="Security Question Two" name="Q2" id="Q2" data-width="100%">
                                             <option value="7">What is your mother's maiden name?</option>
                                             <option value="8">What is the name of your first pet?</option>
                                             <option value="9">Who is your favorite football player?</option>
@@ -115,8 +114,8 @@ include 'header.php';
                                             <option value="11">What is your favorite food?</option>
                                             <option value="12">What was the make and model of your first car?</option>
                                         </select>
-                                        <input type="text" name="A2" id="A2" tabindex="7" class="form-control" placeholder="Answer Two" value="" required>
                                     </div>
+                                    <input type="text" name="A2" id="A2" tabindex="7" class="form-control" placeholder="Answer Two" value="" required>
                                 </div>
                                 
                                 <div class="form-group">
