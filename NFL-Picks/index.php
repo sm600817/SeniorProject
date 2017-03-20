@@ -91,7 +91,39 @@ include 'header.php';
 										data-error="Minimum 8 characters" required>
 									<div class="help-block with-errors"></div>
 								</div>
-								<div class="form-group">
+                                
+                                <div class="row">
+                                    <div class="form-group col-xs-6">
+                                        <select class="selectpicker" title="Security Question One" name="Q1" id="Q1" data-width="auto">
+                                            <option value="1">What is your mother's maiden name?</option>
+                                            <option value="2">What is the name of your first pet?</option>
+                                            <option value="3">Who is your favorite football player?</option>
+                                            <option value="4">What was your childhood nickname?</option>
+                                            <option value="5">What is your favorite food?</option>
+                                            <option value="6">What was the make and model of your first car?</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-xs-6">
+										<input type="text" name="A1" id="A2" tabindex="6" class="form-control" placeholder="Answer One" value="" required>
+									</div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xs-6">
+                                        <select class="selectpicker" title="Security Question Two" name="Q2" id="Q2" data-width="auto">
+                                            <option value="7">What is your mother's maiden name?</option>
+                                            <option value="8">What is the name of your first pet?</option>
+                                            <option value="9">Who is your favorite football player?</option>
+                                            <option value="10">What was your childhood nickname?</option>
+                                            <option value="11">What is your favorite food?</option>
+                                            <option value="12">What was the make and model of your first car?</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-xs-6">
+										<input type="text" name="A2" id="A2" tabindex="7" class="form-control" placeholder="Answer Two" value="" required>
+									</div>
+                                </div>
+                                
+                                <div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-sm-offset-3">
 											<input type="submit" name="register-submit" id="register-submit" tabindex="7" class="form-control btn btn-primary" value="Register Now">
@@ -110,6 +142,11 @@ include 'header.php';
 					$nickname = $_POST["nickname"];
 					$email = $_POST["email"];
 					$password = $_POST["password"];
+                    
+                    $question_one = $_POST["Q1"];
+                    $answer_one = $_POST["A1"];
+                    $question_two = $_POST["Q2"]; //check db
+                    $answer_two = $_POST["A2"];
 
 					if($_FILES['pic']['size'] > 0){
 						$tmpName  = $_FILES['pic']['tmp_name'];
@@ -127,8 +164,8 @@ include 'header.php';
 
 					
 
-					$sql = "INSERT INTO users(first_name, last_name, nickname, email, prof_pic, password, credits) 
-							VALUES ('$first_name', '$last_name', '$nickname', '$email', '$content', '$password', 100)";
+					$sql = "INSERT INTO users(first_name, last_name, nickname, email, prof_pic, password, credits, Q1, A1, Q2, A2) 
+							VALUES ('$first_name', '$last_name', '$nickname', '$email', '$content', '$password', 100, '$question_one', '$answer_one', '$question_two', '$answer_two')";
 					if(mysqli_query($conn, $sql)){
 						echo "<div class='alert alert-success alert-dismissible'>
 					            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
