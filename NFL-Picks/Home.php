@@ -11,20 +11,20 @@ include 'header.php';
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-3">
+                        <div class="gameStream">
     
-                        <!-- Profile image to be inserted here -->
-                        <!-- TODO: php code to print actual account info -->
-                        <p class="usernamePrint">Temp username</p>
-                        <p class="creditsPrint">Credits: 2,000</p>
-                        <p class="profileInfo">Info (will be filled via script later)</p>
+                            <!-- Profile image to be inserted here -->
+                            <!-- TODO: php code to print actual account info -->
+                            <p class="usernamePrint">Temp username</p>
+                            <p class="creditsPrint">Credits: 2,000</p>
+                            <p class="profileInfo">Info (will be filled via script later)</p>
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="feedStream">
     
                             <h3 class="container">Feed</h3>
-                
-                            <!-- TODO: write script to add content to stream feed, live -->
-                
+                                <a class="twitter-timeline" href="https://twitter.com/Lockski1/lists/nfl-picks-dev">Follow @NFL</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                         </div>
                     </div>
                     <div class="col-sm-3">
