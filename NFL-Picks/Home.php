@@ -24,7 +24,7 @@ include 'header.php';
                         <div class="feedStream">
     
                             <h3 class="container">Feed</h3>
-                                <a class="twitter-timeline" href="https://twitter.com/Lockski1/lists/nfl-picks-dev">Follow @NFL</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                <a class="twitter-timeline" data-chrome="nofooter transparent noheader transparent" href="https://twitter.com/Lockski1/lists/nfl-picks-dev">Follow @NFL</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                         </div>
                     </div>
                     <div class="col-sm-3">
