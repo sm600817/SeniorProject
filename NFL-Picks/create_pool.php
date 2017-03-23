@@ -38,7 +38,7 @@ include 'header.php';
 			</form>
 		</div>
 	</div>
-</div>
+
 <?php
 	if(isset($_POST["pool-submit"])){
 		$manager = $_SESSION["email"];
@@ -60,32 +60,39 @@ include 'header.php';
 			$content = addslashes($content);
 		}
 
-		$sql = "INSERT INTO pools(manager, access, pool_name, pool_image, buy_in, total_pot) 
+		if($credits > $buy_in){
+			$sql = "INSERT INTO pools(manager, access, pool_name, pool_image, buy_in, total_pot) 
 				VALUES ('$manager', '$access', '$pool_name', '$content', '$buy_in', '$buy_in')";
 
-		if(mysqli_query($conn, $sql)){
-			$lastId = mysqli_insert_id($conn);
-			$sql = "INSERT INTO scores(pool_id, user, total_score) 
-				VALUES ($lastId, '$manager', 0)";
-			mysqli_query($conn, $sql);
+			if(mysqli_query($conn, $sql)){
+				$lastId = mysqli_insert_id($conn);
+				$sql = "INSERT INTO scores(pool_id, user, total_score) 
+					VALUES ($lastId, '$manager', 0)";
+				mysqli_query($conn, $sql);
 
-			$sql = "UPDATE users
-		            SET credits = credits - $buy_in
-		            WHERE email = '$user'";
-		    mysqli_query($conn, $sql);
+				$sql = "UPDATE users
+			            SET credits = credits - $buy_in
+			            WHERE email = '$user'";
+			    mysqli_query($conn, $sql);
 
-			header("Location: my_pools.php");
+				header("Location: my_pools.php");
+			}
+			else {
+				echo "<div class='alert alert-danger alert-dismissible'>
+			            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+			            <strong>Error!</strong>" . mysqli_error($conn) . 
+			         "</div>";
+			}
 		}
-		else {
+		else{
 			echo "<div class='alert alert-danger alert-dismissible'>
-		            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-		            <strong>Error!</strong>" . mysqli_error($conn) . 
-		         "</div>";
+			            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+			            <strong>Error!</strong> You do not have enough credits to create the pool
+			     </div>";
 		}
-
-
 	}
 ?>
+</div>
 
 
 
