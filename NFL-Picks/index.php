@@ -29,71 +29,10 @@ include 'header.php';
 											<input type="submit" name="login-submit" id="login-submit" tabindex="3" class="form-control btn btn-primary" value="Log In">
 										</div>
 									</div>
-                                <div class="form-group">
-                                    <center><a data-target="#forgotPassword" data-toggle="modal" class="MainNavText" id="MainNavHelp" href="#forgotPassword">Forgot Password?</a></center>
-                                </div>
-                                
-                                <!-- Modal
-                                <div id="forgotPassword" class="modal fade" role="dialog">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Forgot Password?</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-									               <input type="email" name="typeEmail" id="typeEmail" tabindex="5" class="form-control" placeholder="Email Address" data-error="Invalid email address" value="" required>
-									               <div class="help-block with-errors"></div>
-								                </div>
-                                                <div class="form-group">
-									               <input type="password" name="currentPassword" id="currentPassword" tabindex="6" class="form-control" placeholder="Current Password" data-minlength="8" data-error="Minimum 8 characters" required>
-									               <div class="help-block with-errors"></div>
-								                </div>
-                                                <div class="form-group">
-									               <input type="password" name="newPassword" id="newPassword" tabindex="6" class="form-control" placeholder="New Password" data-minlength="8" data-error="Minimum 8 characters" required>
-									               <div class="help-block with-errors"></div>
-								                </div>
-                                                <div class="form-group">
-									               <input type="password" name="retypePassword" id="retypePassword" tabindex="6" class="form-control" placeholder="Retype New Password" data-minlength="8" data-error="Minimum 8 characters" required>
-									               <div class="help-block with-errors"></div>
-								                </div>
-                                                
-                                                <div class="form-group input-group">
-                                	               <div class="input-group-btn">
-                                    	               <select class="selectpicker" title="Security Question One" name="Q1" id="Q1" data-width="100%">
-                                                            <option value="1">What is your mother's maiden name?</option>
-                                                            <option value="2">What is the name of your first pet?</option>
-                                                            <option value="3">Who is your favorite football player?</option>
-                                                            <option value="4">What was your childhood nickname?</option>
-                                                            <option value="5">What is your favorite food?</option>
-                                                            <option value="6">What was the make and model of your first car?</option>
-                                                       </select>
-                                	               </div>
-                                	               <input type="text" name="A1" id="A1" tabindex="6" class="form-control" placeholder="Answer One" value="" required>
-                                                </div>
-                                                <div class="form-group input-group">
-                                	               <div class="input-group-btn">
-                                                        <select class="selectpicker" title="Security Question Two" name="Q2" id="Q2" data-width="100%">
-                                                            <option value="7">What is your mother's maiden name?</option>
-                                                            <option value="8">What is the name of your first pet?</option>
-                                                            <option value="9">Who is your favorite football player?</option>
-                                                            <option value="10">What was your childhood nickname?</option>
-                                                            <option value="11">What is your favorite food?</option>
-                                                            <option value="12">What was the make and model of your first car?</option>
-                                                        </select>
-                                                    </div>
-                                                    <input type="text" name="A2" id="A2" tabindex="7" class="form-control" placeholder="Answer Two" value="" required>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>  
-                                </div>
-                                End Modal -->
-                                    
+									<br>
+	                                <div class="form-group">
+	                                    <center><a data-target="#forgotPassword" data-toggle="modal" class="MainNavText" id="MainNavHelp" href="#forgotPassword">Forgot Password?</a></center>
+	                                </div>
 								</div>
 							</form>
 							<?php
@@ -245,5 +184,90 @@ include 'header.php';
 			?>
 		</div>
 	</div>
+	<div id="forgotPassword" class="modal fade" role="dialog">
+	    <div class="modal-dialog">
+	        <!-- Modal content-->
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal">&times;</button>
+	                <h4 class="modal-title edit-content">Forgot Password</h4>
+	            </div>
+	            <div class="modal-body" id="modal-body">
+	                <form data-toggle="validator" id="pool-form" action="javascript:submitEmail()" method="post" role="form" enctype="multipart/form-data">
+		                <div class="form-group">
+					        <input name="fp_email" type="fp_email" id="fp_email" class="form-control" 
+					        		placeholder="Email" required>
+		            	</div>
+		            	<div class="form-group pull-right">
+            				<input class="btn btn-primary" type="submit" name="submit" value="Next"/>
+            			</div>
+            			<br><br>
+            			<span id="message" class="hidden"></span>
+	            	</form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<script>
+
+		function submitEmail() {
+	        var email = document.getElementById("fp_email").value;
+
+	        $.ajax({
+			   type: "POST",
+			   data: {email: email},
+			   url: "submitEmail.php",
+			   success: function(msg){
+			   		if(msg === "error"){
+				   		var output = "<div class='alert alert-danger alert-dismissible'>" +
+							            "<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+							            "<strong>Sorry!</strong> That email does not belong to a user" +
+							         "</div>";
+						$("#message").removeClass('hidden');
+			     		$('#message').html(output);
+				   	}
+				   	else{
+				   		$('#modal-body').html(msg);
+				   	}
+			   }
+			});
+	    }
+
+	    function submitAnswers() {
+	    	console.log("hello");
+	    	var email = document.getElementById("fp_email").value;
+	        var a1 = document.getElementById("fp_a1").value;
+	        var a2 = document.getElementById("fp_a2").value;
+
+
+	        $.ajax({
+			   type: "POST",
+			   data: {email: email,
+			   		  a1: a1,
+			   		  a2: a2},
+			   url: "submitAnswers.php",
+			   success: function(msg){
+			   		if(msg === "error"){
+				   		var output = "<div class='alert alert-danger alert-dismissible'>" +
+							            "<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+							            "<strong>Sorry!</strong> Your answers do not match" +
+							         "</div>";
+						$("#message").removeClass('hidden');
+			     		$('#message').html(output);
+				   	}
+				   	else{
+				   		var output = "Your password is " + msg;
+				   		$('#modal-body').html(msg);
+				   	}
+			   }
+			});
+	    }
+
+
+
+	</script>
 			
 <?php include "footer.php"; ?>

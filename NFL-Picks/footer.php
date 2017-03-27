@@ -60,10 +60,6 @@
         display: none; 
     }
 
-    .timeline-Header-subtitle {
-        display:none !important;
-    }
-
 
 </style>
 <footer class="footer">

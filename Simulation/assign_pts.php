@@ -4,7 +4,7 @@ include __DIR__ . '/../DBConnect.php';
 
 $week = $_GET['week'];
 
-$sql = "SELECT user, pool_id, week, game, team, pts_assigned
+/*$sql = "SELECT user, pool_id, week, game, team, pts_assigned
 		FROM picks
 		WHERE week = $week";
 
@@ -35,7 +35,7 @@ if (mysqli_num_rows($result) > 0) {
 			if($team == $homeId){
 				if($homeScore > $awayScore){
 					$sql = "UPDATE scores
-							SET total_score = total_score + $homeScore
+							SET total_score = total_score + $homeScore, correct_picks = correct_picks + 1
 							WHERE pool_id = $pool
 							AND user = '$user'";
 					mysqli_query($conn, $sql);
@@ -44,7 +44,7 @@ if (mysqli_num_rows($result) > 0) {
 			if($team == $awayScore){
 				if($awayScore > $homeScore){
 					$sql = "UPDATE scores
-							SET total_score = total_score + $awayScore
+							SET total_score = total_score + $awayScore, correct_picks = correct_picks + 1
 							WHERE pool_id = $pool
 							AND user = '$user'";
 					mysqli_query($conn, $sql);
@@ -59,12 +59,195 @@ if (mysqli_num_rows($result) > 0) {
 			mysqli_query($conn, $sql);
 		}
 
+	}*/
+	if($week == 17){
+		$sql = "SELECT pool_id
+				FROM pools";
+		$result = mysqli_query($conn, $sql);
+
+		while($row = mysqli_fetch_assoc($result)){
+			$most = -1;
+			$second_most = -1;
+			$thrid_most = -1;
+
+			$winner1 = null;
+			$winner2 = null;
+			$winner3 = null;
+
+			$winner1_array = array();
+			$winner2_array = array();
+			$winner3_array = array();
+
+			$pool = $row["pool_id"];
+
+			$sql = "SELECT user, total_score, correct_picks 
+					FROM scores s1 
+					WHERE (1 - 1) =
+						(SELECT COUNT(DISTINCT (total_score)) 
+						 FROM scores s2 
+						 WHERE s2.total_score > s1.total_score
+						 AND pool_id = $pool) 
+					AND pool_id = $pool";
+			$first_result = mysqli_query($conn, $sql);
+
+			if(mysqli_num_rows($first_result) > 1){
+				while($first_row = mysqli_fetch_assoc($first_result)){
+					$correct = $first_row["correct_picks"];
+					$user = $first_row["user"];
+					if($correct > $most){
+						$third_most = $second_most;
+						$winner3 = $winner2;
+
+						$second_most = $most;
+						$winner2 = $winner1;
+
+						$most = $correct;
+						$winner1 = $user;
+					}
+					else if($correct == $most){
+						array_push($winner1_array, $user);
+					}
+					else if($correct > $second_most){
+						$third_most = $second_most;
+						$winner3 = $winner2;
+
+						$second_most = $correct;
+						$winner2 = $user;
+					}
+					else if($correct == $second_most){
+						array_push($winner2_array, $user);
+					}
+					else if($correct > $third_most){
+						$third_most = $correct;
+						$winner3 = $user;
+					}
+					else if($correct == $third_most){
+						array_push($winner3_array, $user);
+					}
+				}
+			}
+			else{
+				$first_row = mysqli_fetch_assoc($first_result);
+				$winner1 = $first_row["user"];
+			}
+			if(!isset($winner2) && count($winner1_array) < 2){
+				$sql = "SELECT user, total_score, correct_picks 
+						FROM scores s1 
+						WHERE (2 - 1) =
+							(SELECT COUNT(DISTINCT (total_score)) 
+							 FROM scores s2 
+							 WHERE s2.total_score > s1.total_score
+							 AND pool_id = $pool) 
+						AND pool_id = $pool";
+				$second_result = mysqli_query($conn, $sql);
+				if(mysqli_num_rows($second_result) > 1){
+					while($second_row = mysqli_fetch_assoc($second_result)){
+						$correct = $second_row["correct_picks"];
+						$user = $second_row["user"];
+						$most = -1;
+						$second_most = -1;
+
+						if($correct > $most){
+							$second_most = $most;
+							$winner3 = $winner2;
+
+							$most = $correct;
+							$winner2 = $user;
+						}
+						else if($correct == $most){
+							array_push($winner2_array, $user);
+						}
+						else if($correct > $second_most){
+							$second_most = $correct;
+							$winner3 = $user;
+						}
+						else if($correct == $second_most){
+							array_push($winner3_array, $user);
+						}
+					}
+				}
+				else{
+					$second_row = mysqli_fetch_assoc($second_result);
+					$winner2 = $second_row["user"];
+				}
+			}
+			if(!isset($winner3) && count($winner2_array) < 1){
+				$sql = "SELECT user, total_score, correct_picks 
+						FROM scores s1 
+						WHERE (3 - 1) =
+							(SELECT COUNT(DISTINCT (total_score)) 
+							 FROM scores s2 
+							 WHERE s2.total_score > s1.total_score
+							 AND pool_id = $pool) 
+						AND pool_id = $pool";
+				$third_result = mysqli_query($conn, $sql);
+				if(mysqli_num_rows($third_result) > 1){
+					while($third_row = mysqli_fetch_assoc($third_result)){
+						$correct = $third_row["correct_picks"];
+						$user = $third_row["user"];
+						$most = -1;
+
+						if($correct > $most){
+							$most_correct = $correct;
+							$winner3 = $user;
+						}
+						else if($correct == $most){
+							array_push($winner3_array, $user);
+						}
+					}
+				}
+				else{
+					$third_row = mysqli_fetch_assoc($third_result);
+					$winner3 = $third_row["user"];
+				}
+			}
+			/*if(count($winner1_array) < 2){
+				if(count($winner1_array) == 0){
+					//give the first place prize to the winner
+
+					if(count($winner2_array) == 0){
+						//give the second place prize to the second winner
+					}
+					else if(count($winner2_array) == 1){
+						//divide the second place prize between the two second place winners
+					}
+					else if(count($winner2_array) > 1){
+						//divide the second place prize among all of the second place winners
+					}
+				}
+				else if(count($winner1_array) == 1){
+					//divide 1st place prize between two first place winners
+
+					if(count($winner2_array) == 0){
+						//give the second place prize to the second winner
+					}
+				}
+				
+
+				if(count($winner2_array) < ){
+
+				}
+			}
+			else if(count($winner1_array) > 1){
+				//divide total pot among all 1st place winners
+			}*/
+
+			echo "Pool $pool:<br>";
+			/*foreach ($winner1_array as $winner) {
+				echo "$winner<br>";
+			}
+			echo "<br><br><br>";*/
+			echo "1st: $winner1<br>";
+			echo "2nd: $winner2<br>";
+			echo "3rd: $winner3<br><br><br>";
+		}		
+
 	}
 
-	echo "All points have been assigned";
-}
+	//echo $winner1;
+/*}
 else{
 	echo "There was a problem assigning points";
-}
+}*/
 
 ?>

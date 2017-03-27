@@ -7,7 +7,7 @@ $gameId = $_GET["game"];
 $awayId = $_GET["awayId"];
 $homeId = $_GET["homeId"];
 
-$sql = "SELECT team_name, offPct
+/*$sql = "SELECT team_name, offPct
 		FROM teams
 		WHERE team_num = " . $awayId;
 $result = mysqli_query($conn, $sql);
@@ -98,6 +98,6 @@ $sql = "UPDATE weeks
 			WHERE week_id = $week";
 mysqli_query($conn, $sql);
 
-$conn->close();
+$conn->close();*/
 
 ?>
