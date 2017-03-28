@@ -71,6 +71,7 @@ if (mysqli_num_rows($result) > 0){
 				<input class='btn btn-primary' type='submit' name='submit' value='Submit'/>
 			</div>
 			<br><br>
+            <span id='message' class='hidden'></span>
     	</form>";
 }
 else{

@@ -237,7 +237,6 @@ include 'header.php';
 	    }
 
 	    function submitAnswers() {
-	    	console.log("hello");
 	    	var email = document.getElementById("fp_email").value;
 	        var a1 = document.getElementById("fp_a1").value;
 	        var a2 = document.getElementById("fp_a2").value;
@@ -253,14 +252,14 @@ include 'header.php';
 			   		if(msg === "error"){
 				   		var output = "<div class='alert alert-danger alert-dismissible'>" +
 							            "<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-							            "<strong>Sorry!</strong> Your answers do not match" +
+							            "<strong>Sorry!</strong> Your answers were incorrect" +
 							         "</div>";
 						$("#message").removeClass('hidden');
 			     		$('#message').html(output);
 				   	}
 				   	else{
 				   		var output = "Your password is " + msg;
-				   		$('#modal-body').html(msg);
+				   		$('#modal-body').html(output);
 				   	}
 			   }
 			});
