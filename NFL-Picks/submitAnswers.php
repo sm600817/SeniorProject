@@ -5,7 +5,9 @@ $email = $_POST["email"];
 $a1 = $_POST["a1"];
 $a2 = $_POST['a2'];
 
-$sql = "";//enter the sql to check the answers and retrieve the password here
+$sql = "SELECT A1, A2, password
+        FROM users
+        WHERE email = '$email'";//enter the sql to check the answers and retrieve the password here
 
 
 $result = mysqli_query($conn, $sql);
