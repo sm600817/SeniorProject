@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 19, 2017 at 09:15 PM
+-- Generation Time: Mar 28, 2017 at 09:07 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -363,7 +363,8 @@ CREATE TABLE `pools` (
 CREATE TABLE `scores` (
   `pool_id` int(11) NOT NULL,
   `user` varchar(75) NOT NULL,
-  `total_score` int(11) DEFAULT NULL
+  `total_score` int(11) DEFAULT NULL,
+  `correct_picks` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -618,7 +619,7 @@ ALTER TABLE `weeks`
 -- AUTO_INCREMENT for table `invites`
 --
 ALTER TABLE `invites`
-  MODIFY `invite_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `invite_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `players`
 --
@@ -628,7 +629,7 @@ ALTER TABLE `players`
 -- AUTO_INCREMENT for table `pools`
 --
 ALTER TABLE `pools`
-  MODIFY `pool_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `pool_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `teams`
 --
