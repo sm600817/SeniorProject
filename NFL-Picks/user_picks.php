@@ -36,7 +36,7 @@ $sql = "SELECT nickname, prof_pic
 $userResult = mysqli_query($conn, $sql);
 $userRow = mysqli_fetch_assoc($userResult);
 
-$sql = "SELECT total_score
+$sql = "SELECT total_score, correct_picks
 		FROM scores
 		WHERE pool_id = $poolId
 		AND user = '$member'";
@@ -58,6 +58,7 @@ $scoreRow = mysqli_fetch_assoc($scoreResult);
             echo "<div class='pull-right'>";
             echo "<span style='float:left; clear:left; font-size:15px;'><strong>Pool: </strong><a href='pool_view.php?pool=" . $poolId . "'>" . $poolName . "</a></span>";
 			echo "<span style='float:left; clear:left; font-size:15px;'><strong>Total Points: </strong>" . $scoreRow["total_score"] . "</span>";
+            echo "<span style='float:left; clear:left; font-size:15px;'><strong>Correct Picks: </strong>" . $scoreRow["correct_picks"] . "</span>";
             echo "</div>";
     
         } else { ?>

@@ -4,7 +4,7 @@ include __DIR__ . '/../DBConnect.php';
 
 $week = $_GET['week'];
 
-/*$sql = "SELECT user, pool_id, week, game, team, pts_assigned
+$sql = "SELECT user, pool_id, week, game, team, pts_assigned
 		FROM picks
 		WHERE week = $week";
 
@@ -59,9 +59,9 @@ if (mysqli_num_rows($result) > 0) {
 			mysqli_query($conn, $sql);
 		}
 
-	}*/
+	}
 	if($week == 17){
-		$sql = "SELECT pool_id
+		$sql = "SELECT pool_id, total_pot
 				FROM pools";
 		$result = mysqli_query($conn, $sql);
 
@@ -79,6 +79,11 @@ if (mysqli_num_rows($result) > 0) {
 			$winner3_array = array();
 
 			$pool = $row["pool_id"];
+			$total_pot = $row["total_pot"];
+
+			$first_prize = $total_pot * .60;
+			$second_prize = $total_pot * .30;
+			$third_prize = $total_pot * .10;
 
 			$sql = "SELECT user, total_score, correct_picks 
 					FROM scores s1 
@@ -87,7 +92,8 @@ if (mysqli_num_rows($result) > 0) {
 						 FROM scores s2 
 						 WHERE s2.total_score > s1.total_score
 						 AND pool_id = $pool) 
-					AND pool_id = $pool";
+					AND pool_id = $pool
+					ORDER BY correct_picks DESC";
 			$first_result = mysqli_query($conn, $sql);
 
 			if(mysqli_num_rows($first_result) > 1){
@@ -138,7 +144,8 @@ if (mysqli_num_rows($result) > 0) {
 							 FROM scores s2 
 							 WHERE s2.total_score > s1.total_score
 							 AND pool_id = $pool) 
-						AND pool_id = $pool";
+						AND pool_id = $pool
+						ORDER BY correct_picks DESC";
 				$second_result = mysqli_query($conn, $sql);
 				if(mysqli_num_rows($second_result) > 1){
 					while($second_row = mysqli_fetch_assoc($second_result)){
@@ -179,7 +186,8 @@ if (mysqli_num_rows($result) > 0) {
 							 FROM scores s2 
 							 WHERE s2.total_score > s1.total_score
 							 AND pool_id = $pool) 
-						AND pool_id = $pool";
+						AND pool_id = $pool
+						ORDER BY correct_picks DESC";
 				$third_result = mysqli_query($conn, $sql);
 				if(mysqli_num_rows($third_result) > 1){
 					while($third_row = mysqli_fetch_assoc($third_result)){
@@ -201,53 +209,143 @@ if (mysqli_num_rows($result) > 0) {
 					$winner3 = $third_row["user"];
 				}
 			}
-			/*if(count($winner1_array) < 2){
+			if(count($winner1_array) < 2){
 				if(count($winner1_array) == 0){
 					//give the first place prize to the winner
+					$sql = "UPDATE users 
+							SET credits = credits + $first_prize
+							WHERE email = '$winner1'";
+					mysqli_query($conn, $sql);
 
 					if(count($winner2_array) == 0){
 						//give the second place prize to the second winner
+						$sql = "UPDATE users 
+								SET credits = credits + $second_prize
+								WHERE email = '$winner2'";
+						mysqli_query($conn, $sql);
+
+
+						if(count($winner3_array) == 0){
+							//give the third place prize to the third winner
+							$sql = "UPDATE users 
+								SET credits = credits + $third_prize
+								WHERE email = '$winner3'";
+							mysqli_query($conn, $sql);
+						}
+						else if(count($winner3_array) > 0){
+							//divide the third place prize among all of the third place winners
+							$third_count = count($winner3_array) + 1;
+
+							$prize = $third_prize / $third_count;
+
+							$sql = "UPDATE users 
+									SET credits = credits + $prize
+									WHERE email = '$winner3'";
+							mysqli_query($conn, $sql);
+
+							foreach ($winner3_array as $winner) {
+								$sql = "UPDATE users 
+										SET credits = credits + $prize
+										WHERE email = '$winner'";
+								mysqli_query($conn, $sql);
+							}
+						}
 					}
-					else if(count($winner2_array) == 1){
-						//divide the second place prize between the two second place winners
-					}
-					else if(count($winner2_array) > 1){
-						//divide the second place prize among all of the second place winners
+					else if(count($winner2_array) > 0){
+						//divide the remaining pot among all of the second place winners
+						$remainingPot = $total_pot - $first_prize;
+
+						$prize = $remainingPot / (count($winner2_array) + 1);
+
+						$sql = "UPDATE users 
+								SET credits = credits + $prize
+								WHERE email = '$winner2'";
+						mysqli_query($conn, $sql);
+
+						foreach ($winner2_array as $winner) {
+							$sql = "UPDATE users 
+									SET credits = credits + $prize
+									WHERE email = '$winner'";
+							mysqli_query($conn, $sql);
+						}
 					}
 				}
 				else if(count($winner1_array) == 1){
 					//divide 1st place prize between two first place winners
+					$prize = $first_prize / 2;
+
+					$sql = "UPDATE users 
+							SET credits = credits + $prize
+							WHERE email = '$winner1'";
+					mysqli_query($conn, $sql);
+
+					foreach ($winner1_array as $winner) {
+						$sql = "UPDATE users 
+								SET credits = credits + $prize
+								WHERE email = '$winner'";
+						mysqli_query($conn, $sql);
+					}
+
 
 					if(count($winner2_array) == 0){
 						//give the second place prize to the second winner
+						$sql = "UPDATE users 
+								SET credits = credits + $second_prize
+								WHERE email = '$winner2'";
+						mysqli_query($conn, $sql);
 					}
-				}
-				
+					else if(count($winner2_array) > 0){
+						//divide the remaining pot among all of the second place winners
+						$remainingPot = $total_pot - $first_prize;
 
-				if(count($winner2_array) < ){
+						$prize = $remainingPot / (count($winner2_array) + 1);
 
+						$sql = "UPDATE users 
+								SET credits = credits + $prize
+								WHERE email = '$winner2'";
+						mysqli_query($conn, $sql);
+
+						foreach ($winner2_array as $winner) {
+							$sql = "UPDATE users 
+									SET credits = credits + $prize
+									WHERE email = '$winner'";
+							mysqli_query($conn, $sql);
+						}
+					}
 				}
 			}
 			else if(count($winner1_array) > 1){
 				//divide total pot among all 1st place winners
-			}*/
+				$first_count = count($winner1_array) + 1;
+				$prize = $total_pot / $first_count;
 
-			echo "Pool $pool:<br>";
-			/*foreach ($winner1_array as $winner) {
+				$sql = "UPDATE users 
+						SET credits = credits + $prize
+						WHERE email = '$winner1'";
+				mysqli_query($conn, $sql);
+
+				foreach ($winner1_array as $winner) {
+					$sql = "UPDATE users 
+							SET credits = credits + $prize
+							WHERE email = '$winner'";
+					mysqli_query($conn, $sql);
+				}
+			}
+
+			/*echo "Pool $pool:<br>";
+			foreach ($winner2_array as $winner) {
 				echo "$winner<br>";
 			}
-			echo "<br><br><br>";*/
-			echo "1st: $winner1<br>";
-			echo "2nd: $winner2<br>";
-			echo "3rd: $winner3<br><br><br>";
+			echo "<br><br><br>";
+			echo "1st: $winner1 $first_prize<br>";
+			echo "2nd: $winner2 $second_prize<br>";
+			echo "3rd: $winner3 $third_prize<br><br><br>";*/
 		}		
 
 	}
-
-	//echo $winner1;
-/*}
+}
 else{
 	echo "There was a problem assigning points";
-}*/
+}
 
 ?>

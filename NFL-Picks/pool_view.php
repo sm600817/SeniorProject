@@ -90,7 +90,7 @@ if (mysqli_num_rows($poolResult) > 0){
 $sql = "SELECT user, total_score
 		FROM scores
 		WHERE pool_id = $poolId
-		ORDER BY total_score DESC";
+		ORDER BY total_score DESC, correct_picks DESC";
 
 $result = mysqli_query($conn, $sql);
 
