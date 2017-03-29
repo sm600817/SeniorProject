@@ -40,26 +40,36 @@ include 'header.php';
 								$email = $_POST["email"];
 								$password = $_POST["password"];
 
-								$sql = "SELECT email, first_name, last_name, nickname, prof_pic
+								$sql = "SELECT email, first_name, last_name, nickname, prof_pic, password
 											FROM users
-											WHERE email = '$email' AND password = '$password'";
+											WHERE email = '$email'";
 
 								$result = mysqli_query($conn, $sql);
 
 								if (mysqli_num_rows($result) > 0){
 									$row = mysqli_fetch_assoc($result);
-									$_SESSION["email"] = $row["email"];
-									$_SESSION["first_name"] = $row["first_name"];
-									$_SESSION["last_name"] = $row["last_name"];
-									$_SESSION["fullname"] = $row["first_name"] . " " . $row["last_name"];
-									$_SESSION["nickname"] = $row["nickname"];
-									$_SESSION["prof_pic"] = $row["prof_pic"];
-									header("Location: Home.php");
+									$hash = $row["password"];
+
+									if (hash_equals($hash, crypt($password, $hash))){
+										$_SESSION["email"] = $row["email"];
+										$_SESSION["first_name"] = $row["first_name"];
+										$_SESSION["last_name"] = $row["last_name"];
+										$_SESSION["fullname"] = $row["first_name"] . " " . $row["last_name"];
+										$_SESSION["nickname"] = $row["nickname"];
+										$_SESSION["prof_pic"] = $row["prof_pic"];
+										header("Location: Home.php");
+									}
+									else{
+										echo "<div class='alert alert-danger alert-dismissible'>
+								            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+								            <strong>Sorry!</strong> The password you entered was incorrect
+								         </div>";
+									}
 								}
 								else{
 									echo "<div class='alert alert-danger alert-dismissible'>
 								            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-								            <strong>Sorry!</strong> Incorrect email or password
+								            <strong>Sorry!</strong> The email you entered does not belong to a user
 								         </div>";
 								}
 							}
@@ -141,7 +151,15 @@ include 'header.php';
 					$last_name = $_POST["last_name"];
 					$nickname = $_POST["nickname"];
 					$email = $_POST["email"];
+
+					//encrypt password
 					$password = $_POST["password"];
+
+					$cost = 10;
+					$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+					$salt = sprintf("$2a$%02d$", $cost) . $salt;
+					$hash = crypt($password, $salt);
+
                     
                     $question_one = $_POST["Q1"];
                     $answer_one = $_POST["A1"];
@@ -165,7 +183,7 @@ include 'header.php';
 					
 
 					$sql = "INSERT INTO users(first_name, last_name, nickname, email, prof_pic, password, credits, Q1, A1, Q2, A2) 
-							VALUES ('$first_name', '$last_name', '$nickname', '$email', '$content', '$password', 100, '$question_one', '$answer_one', '$question_two', '$answer_two')";
+							VALUES ('$first_name', '$last_name', '$nickname', '$email', '$content', '$hash', 100, '$question_one', '$answer_one', '$question_two', '$answer_two')";
 					if(mysqli_query($conn, $sql)){
 						echo "<div class='alert alert-success alert-dismissible'>
 					            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
