@@ -26,16 +26,16 @@ if (mysqli_num_rows($result) > 0) {
 			if($team == $homeId){
 				if($homeScore > $awayScore){
 					$sql = "UPDATE scores
-							SET total_score = total_score + $homeScore
+							SET total_score = total_score + $homeScore, correct_picks = correct_picks + 1
 							WHERE pool_id = $pool
 							AND user = '$user'";
 					mysqli_query($conn, $sql);
 				}
 			}
-			if($team == $awayScore){
+			if($team == $awayId){
 				if($awayScore > $homeScore){
 					$sql = "UPDATE scores
-							SET total_score = total_score + $awayScore
+							SET total_score = total_score + $awayScore, correct_picks = correct_picks + 1
 							WHERE pool_id = $pool
 							AND user = '$user'";
 					mysqli_query($conn, $sql);
@@ -337,7 +337,7 @@ if (mysqli_num_rows($result) > 0) {
 		}		
 
 	}
-	
+
 	echo "All points have been assigned";
 	
 }
