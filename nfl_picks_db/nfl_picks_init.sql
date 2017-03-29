@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2017 at 04:32 PM
+-- Generation Time: Mar 29, 2017 at 04:49 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -467,9 +467,9 @@ CREATE TABLE `users` (
   `prof_pic` mediumblob,
   `credits` int(11) DEFAULT NULL,
   `Q1` int(11) NOT NULL,
-  `A1` varchar(75) NOT NULL,
+  `A1` longtext NOT NULL,
   `Q2` int(11) NOT NULL,
-  `A2` varchar(75) NOT NULL
+  `A2` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

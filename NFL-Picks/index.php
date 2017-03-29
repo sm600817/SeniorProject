@@ -154,7 +154,6 @@ include 'header.php';
 
 					//encrypt password
 					$password = $_POST["password"];
-
 					$cost = 10;
 					$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
 					$salt = sprintf("$2a$%02d$", $cost) . $salt;
@@ -162,9 +161,23 @@ include 'header.php';
 
                     
                     $question_one = $_POST["Q1"];
+
+                    //encrypt first answer
                     $answer_one = $_POST["A1"];
-                    $question_two = $_POST["Q2"]; //check db
+                    $cost = 10;
+					$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+					$salt = sprintf("$2a$%02d$", $cost) . $salt;
+					$answer_one = crypt($answer_one, $salt);
+
+
+                    $question_two = $_POST["Q2"];
+
+                    //encrypt second answer
                     $answer_two = $_POST["A2"];
+                    $cost = 10;
+					$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+					$salt = sprintf("$2a$%02d$", $cost) . $salt;
+					$answer_two = crypt($answer_two, $salt);
 
 					if($_FILES['pic']['size'] > 0){
 						$tmpName  = $_FILES['pic']['tmp_name'];
