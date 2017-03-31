@@ -102,7 +102,7 @@ include 'header.php';
 								<div class="form-group">
 									<input type="password" name="password" id="password" tabindex="6" class="form-control" 
 										placeholder="Password" data-minlength="8" 
-										data-error="Minimum 8 characters" required>
+										data-error="Minimum of 8 characters" required>
 									<div class="help-block with-errors"></div>
 								</div>
                                 <div class="form-group input-group">
@@ -224,10 +224,10 @@ include 'header.php';
 	                <h4 class="modal-title edit-content">Forgot Password</h4>
 	            </div>
 	            <div class="modal-body" id="modal-body">
-	                <form data-toggle="validator" id="pool-form" action="javascript:submitEmail()" method="post" role="form" enctype="multipart/form-data">
+	                <form data-toggle="validator" id="fp_form" action="javascript:submitEmail()" method="post" role="form" enctype="multipart/form-data">
 		                <div class="form-group">
-					        <input name="fp_email" type="fp_email" id="fp_email" class="form-control" 
-					        		placeholder="Email" required>
+					        <input name="fp_email" type="email" id="fp_email" class="form-control" 
+					        	placeholder="Email" required>
 		            	</div>
 		            	<div class="form-group pull-right">
             				<input class="btn btn-primary" type="submit" name="submit" value="Next"/>
@@ -262,6 +262,7 @@ include 'header.php';
 				   	}
 				   	else{
 				   		$('#modal-body').html(msg);
+				   		$('#question_form').validator();
 				   	}
 			   }
 			});
@@ -289,8 +290,33 @@ include 'header.php';
 			     		$('#message').html(output);
 				   	}
 				   	else{
-				   		var output = "Your password is " + msg;
-				   		$('#modal-body').html(output);
+				   		$('#modal-body').html(msg);
+				   		$('#pswrd_form').validator();
+				   	}
+			   }
+			});
+	    }
+
+	    function submitPassword() {
+	    	var email = document.getElementById("fp_email").value;
+	        var password = document.getElementById("fp_pswrd").value;
+
+	        $.ajax({
+			   type: "POST",
+			   data: {email: email,
+			   		  password: password},
+			   url: "submitPassword.php",
+			   success: function(msg){
+			   		if(msg === "error"){
+				   		var output = "<div class='alert alert-danger alert-dismissible'>" +
+							            "<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+							            "<strong>Sorry!</strong> There was a problem resetting your password" +
+							         "</div>";
+						$("#message").removeClass('hidden');
+			     		$('#message').html(output);
+				   	}
+				   	else{
+				   		$('#modal-body').html(msg);
 				   	}
 			   }
 			});

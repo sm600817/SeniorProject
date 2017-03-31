@@ -55,7 +55,7 @@ if (mysqli_num_rows($result) > 0){
         $questionTwo = 'What was the make and model of your first car?';
     }
 
-	echo "<form data-toggle='validator' id='question-form' action='javascript:submitAnswers()'' method='post' role='form'>
+	echo "<form data-toggle='validator' id='question_form' action='javascript:submitAnswers()'' method='post' role='form'>
             <div class='form-group'>
             	<input name='fp_email' id='fp_email' value='$email' type='email' class='form-control' style='display:none;'/>
             	<p> $question </p>
@@ -68,7 +68,7 @@ if (mysqli_num_rows($result) > 0){
 		        		placeholder='Answer 2' required>
         	</div>
         	<div class='form-group pull-right'>
-				<input class='btn btn-primary' type='submit' name='submit' value='Submit'/>
+				<input class='btn btn-primary' type='submit' name='submit' value='Next'/>
 			</div>
 			<br><br>
             <span id='message' class='hidden'></span>
