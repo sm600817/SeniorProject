@@ -105,48 +105,48 @@ if(!empty($_POST["week"])){
 						if ($pick == $awayTeam_id) {
 							if($awayScore > $homeScore){
 								echo "<tr height='75' id='$game_id' class='success'>
-										<td><label class='radio-inline'><strong>* $awayTeam</strong></label></td>
+										<td><label class='radio-inline'><strong>* $awayTeam ($awayWs-$awayLs-$awayTies)</strong></label></td>
 										<td>
 											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "' />
 											<label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label>
 											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
 										</td>
-										<td><label class='radio-inline'>$homeTeam</label></td>
+										<td><label class='radio-inline'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 									  </tr>";
 							}
 							else {
 								echo "<tr height='75' id='$game_id' class='danger'>
-										<td><label class='radio-inline'><strong>* $awayTeam</strong></label></td>
+										<td><label class='radio-inline'><strong>* $awayTeam ($awayWs-$awayLs-$awayTies)</strong></label></td>
 										<td>
 											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "' />
 											<label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label>
 											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
 										</td>
-										<td><label class='radio-inline'>$homeTeam</label></td>
+										<td><label class='radio-inline'>$homeTeam ($homeWs-$homeLs-$homeTies)</label></td>
 									  </tr>";
 							}
 						}
 						else if($pick == $homeTeam_id){
 							if($homeScore > $awayScore){
 								echo "<tr height='75' id='$game_id' class='success'>
-										<td><label class='radio-inline'>$awayTeam</label></td>
+										<td><label class='radio-inline'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
 										<td>
 											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "' />
 											<label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label>
 											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
 										</td>
-										<td><label class='radio-inline'><strong>* $homeTeam</strong></label></td>
+										<td><label class='radio-inline'><strong>* $homeTeam ($homeWs-$homeLs-$homeTies)</strong></label></td>
 									  </tr>";
 							}
 							else {
 								echo "<tr height='75' id='$game_id' class='danger'>
-										<td><label class='radio-inline'>$awayTeam</label></td>
+										<td><label class='radio-inline'>$awayTeam ($awayWs-$awayLs-$awayTies)</label></td>
 										<td>
 											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "' />
 											<label style='padding-left: 15px; padding-right: 15px;'>$awayScore - $homeScore</label>
 											<img hspace='10' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "' />
 										</td>
-										<td><label class='radio-inline'><strong>* $homeTeam</strong></label></td>
+										<td><label class='radio-inline'><strong>* $homeTeam ($homeWs-$homeLs-$homeTies)</strong></label></td>
 									  </tr>";
 							}
 						}
