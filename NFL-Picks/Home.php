@@ -21,7 +21,16 @@ $sql = "SELECT week_id, game1, game2, game3, game4, game5, game6, game7,
 		GROUP BY was_played";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
-$week = $row["week_id"];
+$last_week = $row["week_id"];
+
+$next_week = $last_week + 1;
+$sql = "SELECT week_id, game1, game2, game3, game4, game5, game6, game7,
+               game8, game9, game10, game11, game12, game13, game14, game15, game16
+		FROM weeks
+		WHERE week_id = $next_week
+		GROUP BY was_played";
+$futureResult = mysqli_query($conn, $sql);
+$futureRow = mysqli_fetch_assoc($futureResult);
 
 ?>
 
@@ -39,7 +48,7 @@ $week = $row["week_id"];
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th><center><?php echo 'Week ' . $week ?> Scores</center></th>
+                                        <th><center><?php echo 'Week ' . $last_week ?> Scores</center></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,16 +84,22 @@ $week = $row["week_id"];
                                                     WHERE team_num = $away_id";
                                             $awayResult = mysqli_query($conn, $sql);
                                             $awayRow = mysqli_fetch_assoc($awayResult);
-
+                                        
                                             $awayName = $awayRow["team_name"];
                                             $awayLogo = $awayRow["team_logo"];
-
-                                            echo "<td> <img style='float:left;' hspace='5' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "'/>" . $homeName . " " . $homeScore . " vs " . "<img style='float:left;' hspace='5' WIDTH='50' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "'/>" . $awayName . " " . $awayScore . "</td>";
+                                            
+                                            echo "<td> <img style='float:left;' hspace='5' HEIGHT='40' WIDTH='40' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "'/>" . $homeName . " " . $homeScore . " vs " . "<img hspace='5' HEIGHT='40' WIDTH='40' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "'/>" . $awayName . " " . $awayScore . "</td>";
+                                            
                                         }
                                     }
                                 ?>
                                 </tbody>
                             </table>
+                            <style>
+                                tr td{
+                                    display: block;
+                                }
+                            </style>
                             <?php } else {
                                 echo 'no scores from last week'?> 
                             <?php } ?>
@@ -99,7 +114,63 @@ $week = $row["week_id"];
                     </div>
                     <div class="col-sm-3">
                         <div class="rightInfo">
-                            <!-- Upcoming week games -->
+                            <h3 class="container">Next Week's Matchups</h3>
+                            <?php if (mysqli_num_rows($futureResult) > 0){ ?>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th><center><?php echo 'Week ' . $next_week ?> Matchups</center></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                    for($i = 1; $i < 17; $i++){
+                                        $game = "game" . $i;
+                                        $game = $futureRow[$game];
+
+                                        if($game != null){
+                                            $sql = "SELECT game_id, home_team, away_team
+                                                FROM games
+                                                WHERE game_id = $game";
+                                            $gameResult = mysqli_query($conn, $sql);
+                                            $gameRow = mysqli_fetch_assoc($gameResult);
+
+                                            $home_id = $gameRow["home_team"];
+                                            $away_id = $gameRow["away_team"];
+
+                                            $sql = "SELECT team_num, team_city, team_name, team_logo
+                                                    FROM teams
+                                                    WHERE team_num = $home_id";
+                                            $homeResult = mysqli_query($conn, $sql);
+                                            $homeRow = mysqli_fetch_assoc($homeResult);
+
+                                            $homeName = $homeRow["team_name"];
+                                            $homeLogo = $homeRow["team_logo"];
+
+                                            $sql = "SELECT team_num, team_city, team_name, team_logo
+                                                    FROM teams
+                                                    WHERE team_num = $away_id";
+                                            $awayResult = mysqli_query($conn, $sql);
+                                            $awayRow = mysqli_fetch_assoc($awayResult);
+                                        
+                                            $awayName = $awayRow["team_name"];
+                                            $awayLogo = $awayRow["team_logo"];
+                                            
+                                            echo "<td> <img style='float:left;' hspace='5' HEIGHT='40' WIDTH='40' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "'/>" . $homeName . " " . " vs " . "<img hspace='5' HEIGHT='40' WIDTH='40' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "'/>" . $awayName . " " . "</td>";
+                                            
+                                        }
+                                    }
+                                ?>
+                                </tbody>
+                            </table>
+                            <style>
+                                tr td{
+                                    display: block;
+                                }
+                            </style>
+                            <?php } else {
+                                echo 'no scores from last week'?> 
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
