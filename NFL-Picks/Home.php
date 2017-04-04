@@ -50,12 +50,17 @@ $futureRow = mysqli_fetch_assoc($futureResult);
                         <div class="gameStream">
                             <h3 class="container">Last Week</h3>
                             <!--Scores from last week -->
-                            <?php if (mysqli_num_rows($result) > 0){ ?>
                             <table class="table table-hover">
                                 <thead>
+                            <?php if (mysqli_num_rows($result) == 0){ ?>
+                                    <tr>
+                                        <th><center>No Games Last Week</center></th>
+                                    </tr>
+                            <?php } else { ?> 
                                     <tr>
                                         <th><center><?php echo 'Week ' . $last_week ?> Scores</center></th>
                                     </tr>
+                            <?php } ?>
                                 </thead>
                                 <tbody>
                                 <?php
@@ -120,27 +125,29 @@ $futureRow = mysqli_fetch_assoc($futureResult);
                                 ?>
                                 </tbody>
                             </table>
-                            <?php } else {
-                                echo 'No scores from last week'?> 
-                            <?php } ?>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="feedStream">
     
                             <h3 class="container">Feed</h3>
-                                <a class="twitter-timeline" data-chrome="nofooter transparent noheader transparent" href="https://twitter.com/Lockski1/lists/nfl-picks-dev">Follow @NFL</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                <a class="twitter-timeline" data-height="1510" data-chrome="nofooter transparent noheader transparent" href="https://twitter.com/Lockski1/lists/nfl-picks-dev">Follow @NFL</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="rightInfo">
                             <h3 class="container">This Week</h3>
-                            <?php if (mysqli_num_rows($futureResult) > 0){ ?>
                             <table class="table table-hover">
                                 <thead>
+                            <?php if (mysqli_num_rows($futureResult) == 0){ ?>
+                                    <tr>
+                                        <th><center>No Upcoming Games</center></th>
+                                    </tr>
+                            <?php } else { ?> 
                                     <tr>
                                         <th><center><?php echo 'Week ' . $next_week ?> Matchups</center></th>
                                     </tr>
+                            <?php } ?>
                                 </thead>
                                 <tbody>
                                 <?php
@@ -195,9 +202,6 @@ $futureRow = mysqli_fetch_assoc($futureResult);
                                     display: block;
                                 }
                             </style>
-                            <?php } else {
-                                echo 'No upcoming games'?> 
-                            <?php } ?>
                         </div>
                     </div>
                 </div>
