@@ -210,5 +210,6 @@ $futureRow = mysqli_fetch_assoc($futureResult);
                 </div>
             </div>
         </div>
+    </div>
 </div>
 <?php include "footer.php"; ?>
