@@ -81,7 +81,7 @@ $futureRow = mysqli_fetch_assoc($futureResult);
                                             $home_id = $gameRow["home_team"];
                                             $away_id = $gameRow["away_team"];
 
-                                            $sql = "SELECT team_num, team_city, team_name, team_logo
+                                            $sql = "SELECT team_num, team_city, team_name, team_logo, abbreviation
                                                     FROM teams
                                                     WHERE team_num = $home_id";
                                             $homeResult = mysqli_query($conn, $sql);
@@ -89,8 +89,9 @@ $futureRow = mysqli_fetch_assoc($futureResult);
 
                                             $homeName = $homeRow["team_name"];
                                             $homeLogo = $homeRow["team_logo"];
+                                            $homeAbbr = $homeRow["abbreviation"];
 
-                                            $sql = "SELECT team_num, team_city, team_name, team_logo
+                                            $sql = "SELECT team_num, team_city, team_name, team_logo, abbreviation
                                                     FROM teams
                                                     WHERE team_num = $away_id";
                                             $awayResult = mysqli_query($conn, $sql);
@@ -98,6 +99,7 @@ $futureRow = mysqli_fetch_assoc($futureResult);
                                         
                                             $awayName = $awayRow["team_name"];
                                             $awayLogo = $awayRow["team_logo"];
+                                            $awayAbbr = $awayRow["abbreviation"];
 
                                             if($homeScore > $awayScore){
                                                 $homeWeight = 900;
@@ -110,12 +112,14 @@ $futureRow = mysqli_fetch_assoc($futureResult);
 
                                             
                                             echo "<tr style='display:block;'>
-                                                    <td><img hspace='5' HEIGHT='30' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "'/>
-                                                        <span>" . $homeName . "</span>
+                                                    <td>
+                                                        <img hspace='5' HEIGHT='30' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "'/>
+                                                        <span style='position:absolute; right:110px;'>" . $homeAbbr . "</span>
                                                         <span style='float:right; font-weight: $homeWeight;'>" . $homeScore . "</span>
                                                     </td>
-                                                    <td style='border-top: 0'><img hspace='5' HEIGHT='30' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "'/>
-                                                        <span>" . $awayName . "</span>
+                                                    <td style='border-top: 0'>
+                                                        <img hspace='5' HEIGHT='30' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "'/>
+                                                        <span style='position:absolute; right:110px;'>" . $awayAbbr . "</span>
                                                         <span style='float:right; font-weight: $awayWeight;'>" . $awayScore . "</span> 
                                                     </td>
                                                   </tr>";  
@@ -165,7 +169,7 @@ $futureRow = mysqli_fetch_assoc($futureResult);
                                             $home_id = $gameRow["home_team"];
                                             $away_id = $gameRow["away_team"];
 
-                                            $sql = "SELECT team_num, team_city, team_name, team_logo
+                                            $sql = "SELECT team_num, team_city, team_name, team_logo, abbreviation
                                                     FROM teams
                                                     WHERE team_num = $home_id";
                                             $homeResult = mysqli_query($conn, $sql);
@@ -173,8 +177,9 @@ $futureRow = mysqli_fetch_assoc($futureResult);
 
                                             $homeName = $homeRow["team_name"];
                                             $homeLogo = $homeRow["team_logo"];
+                                            $homeAbbr = $homeRow["abbreviation"];
 
-                                            $sql = "SELECT team_num, team_city, team_name, team_logo
+                                            $sql = "SELECT team_num, team_city, team_name, team_logo, abbreviation
                                                     FROM teams
                                                     WHERE team_num = $away_id";
                                             $awayResult = mysqli_query($conn, $sql);
@@ -182,13 +187,16 @@ $futureRow = mysqli_fetch_assoc($futureResult);
                                         
                                             $awayName = $awayRow["team_name"];
                                             $awayLogo = $awayRow["team_logo"];
+                                            $awayAbbr = $awayRow["abbreviation"];
                                             
                                             echo "<tr style='display:block;'>
-                                                    <td><img hspace='5' HEIGHT='30' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "'/>
-                                                        <span>" . $homeName . "</span>
+                                                    <td>
+                                                        <img hspace='5' HEIGHT='30' src='data:image/jpeg;base64," . base64_encode( $homeLogo ) . "'/>
+                                                        <span style='float:right; padding-right: 90px;'>" . $homeAbbr . "</span> 
                                                     </td>
-                                                    <td style='border-top: 0'><img hspace='5' HEIGHT='30' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "'/>
-                                                        <span>" . $awayName . "</span>
+                                                    <td style='border-top: 0'>
+                                                        <img hspace='5' HEIGHT='30' src='data:image/jpeg;base64," . base64_encode( $awayLogo ) . "'/>
+                                                        <span style='float:right; padding-right: 90px;'>" . $awayAbbr . "</span>
                                                     </td>
                                                   </tr>"; 
                                             
