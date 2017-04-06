@@ -45,7 +45,7 @@ $futureRow = mysqli_fetch_assoc($futureResult);
         <div class="row">
             <div class="col-sm-3">
                 <div class="gameStream">
-                    <h3 class="container">Last Week</h3>
+                    <h3>Last Week</h3>
                     <!--Scores from last week -->
                     <table class="table table-hover">
                         <thead>
@@ -130,14 +130,13 @@ $futureRow = mysqli_fetch_assoc($futureResult);
             </div>
             <div class="col-sm-6">
                 <div class="feedStream">
-
-                    <h3 class="container">Feed</h3>
+                    <h3>Feed</h3>
                         <a class="twitter-timeline" data-height="1510" data-chrome="nofooter transparent noheader transparent" href="https://twitter.com/Lockski1/lists/nfl-picks-dev">Follow @NFL</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="rightInfo">
-                    <h3 class="container">This Week</h3>
+                    <h3>This Week</h3>
                     <table class="table table-hover">
                         <thead>
                     <?php if (mysqli_num_rows($futureResult) == 0){ ?>
