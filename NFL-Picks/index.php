@@ -18,7 +18,9 @@ include 'header.php';
 	        			<div id="loginTab" role="tabpanel" class="tab-pane active">
 	        				<form data-toggle="validator" id="login-form" action="<?php $_PHP_SELF ?>" method="post" role="form">
 								<div class="form-group">
-									<input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="" required>
+									<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" 
+										data-error="Invalid email address" value="" required>
+									<div class="help-block with-errors"></div>
 								</div>
 								<div class="form-group">
 									<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
@@ -43,6 +45,8 @@ include 'header.php';
 								$sql = "SELECT email, first_name, last_name, nickname, prof_pic, password
 											FROM users
 											WHERE email = '$email'";
+
+								echo $sql;
 
 								$result = mysqli_query($conn, $sql);
 
