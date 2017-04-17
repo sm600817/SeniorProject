@@ -395,6 +395,12 @@ $result = mysqli_query($conn, $sql);
     if(isset($_POST["pool-submit"])){
         $pool_name = $_POST["pool_name"];
 
+        if(strpos($pool_name, "'")){
+            $pos = strpos($pool_name, "'");
+
+            $pool_name = substr_replace($pool_name, "'", $pos, 0);
+        }
+
         if($_FILES['pool_img']['size'] > 0){
             $tmpName  = $_FILES['pool_img']['tmp_name'];
 

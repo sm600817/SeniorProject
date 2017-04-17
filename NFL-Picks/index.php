@@ -156,6 +156,24 @@ include 'header.php';
 					$nickname = $_POST["nickname"];
 					$email = $_POST["email"];
 
+					if(strpos($first_name, "'")){
+						$pos = strpos($first_name, "'");
+
+						$first_name = substr_replace($first_name, "'", $pos, 0);
+					}
+
+					if(strpos($last_name, "'")){
+						$pos = strpos($last_name, "'");
+
+						$last_name = substr_replace($last_name, "'", $pos, 0);
+					}
+
+					if(strpos($nickname, "'")){
+						$pos = strpos($nickname, "'");
+
+						$nickname = substr_replace($nickname, "'", $pos, 0);
+					}
+
 					//encrypt password
 					$password = $_POST["password"];
 					$cost = 10;

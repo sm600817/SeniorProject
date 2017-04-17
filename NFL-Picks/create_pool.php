@@ -46,6 +46,12 @@ include 'header.php';
 		$access = $_POST["access"];
 		$buy_in = $_POST["buy_in"];
 
+		if(strpos($pool_name, "'")){
+			$pos = strpos($pool_name, "'");
+
+			$pool_name = substr_replace($pool_name, "'", $pos, 0);
+		}
+
 		if($_FILES['pool_img']['size'] > 0){
 			$tmpName  = $_FILES['pool_img']['tmp_name'];
 
@@ -64,6 +70,8 @@ include 'header.php';
 			$sql = "INSERT INTO pools(manager, access, pool_name, pool_image, buy_in, total_pot) 
 				VALUES ('$manager', '$access', '$pool_name', '$content', '$buy_in', '$buy_in')";
 
+				echo $sql;
+
 			if(mysqli_query($conn, $sql)){
 				$lastId = mysqli_insert_id($conn);
 				$sql = "INSERT INTO scores(pool_id, user, total_score) 
@@ -80,8 +88,8 @@ include 'header.php';
 			else {
 				echo "<div class='alert alert-danger alert-dismissible'>
 			            <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-			            <strong>Error!</strong>" . mysqli_error($conn) . 
-			         "</div>";
+			            <strong>Sorry!</strong> There was a problem creating the pool 
+			          </div>";
 			}
 		}
 		else{

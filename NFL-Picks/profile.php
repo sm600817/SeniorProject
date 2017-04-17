@@ -22,6 +22,24 @@ include 'header.php';
         $last_name = $_POST["last_name"];
 		$email = $_POST["email"];
         $nickname = $_POST["nickname"];
+
+        if(strpos($first_name, "'")){
+            $pos = strpos($first_name, "'");
+
+            $first_name = substr_replace($first_name, "'", $pos, 0);
+        }
+
+        if(strpos($last_name, "'")){
+            $pos = strpos($last_name, "'");
+
+            $last_name = substr_replace($last_name, "'", $pos, 0);
+        }
+
+        if(strpos($nickname, "'")){
+            $pos = strpos($nickname, "'");
+
+            $nickname = substr_replace($nickname, "'", $pos, 0);
+        }
         
 		if($_FILES['pic']['size'] > 0){
             $tmpName  = $_FILES['pic']['tmp_name'];
@@ -50,11 +68,30 @@ include 'header.php';
         
 		
         if(mysqli_query($conn, $sql)){
+            if(strpos($first_name, "'")){
+                $pos = strpos($first_name, "'");
+
+                $first_name = substr_replace($first_name, "", $pos, 1);
+            }
+
+            if(strpos($last_name, "'")){
+                $pos = strpos($last_name, "'");
+
+                $last_name = substr_replace($last_name, "", $pos, 1);
+            }
+
+            if(strpos($nickname, "'")){
+                $pos = strpos($nickname, "'");
+
+                $nickname = substr_replace($nickname, "", $pos, 1);
+            }
+
             $_SESSION["email"] = $email;
             $_SESSION["first_name"] = $first_name;
             $_SESSION["last_name"] = $last_name;
             $_SESSION["fullname"] = $first_name . " " . $last_name;
             $_SESSION["nickname"] = $nickname;
+
             if($_FILES['pic']['size'] > 0){
                 $sql = "SELECT prof_pic
                     FROM users
@@ -69,7 +106,7 @@ include 'header.php';
             header("Location: profile.php");
         }
 		else {
-            echo "<div class='alert alert-success alert-dismissible'>
+            echo "<div class='alert alert-danger alert-dismissible'>
                     <a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
                     <strong>Sorry!</strong> There was a problem. Please try again
                  </div>";

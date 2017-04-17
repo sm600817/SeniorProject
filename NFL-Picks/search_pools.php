@@ -8,6 +8,12 @@ include 'header.php';
 if(isset($_GET["pool-srch"])){
 	$src_term = $_GET["pool-srch"];
 
+	if(strpos($src_term, "'")){
+			$pos = strpos($src_term, "'");
+
+			$src_term = substr_replace($src_term, "'", $pos, 0);
+	}
+
 	$sql = "SELECT pool_id, pool_name, pool_image, manager, buy_in, total_pot
 			FROM pools
 			WHERE access = 'Public'
