@@ -25,6 +25,11 @@
         $row = mysqli_fetch_assoc($result);
         $unread = $row["count"];
     }
+    else if($title != 'Log In'){
+        if(!isset($_SESSION['email'])){
+            header("Location: index.php");
+        }
+    }
 
 ?>
 <html lang="en">

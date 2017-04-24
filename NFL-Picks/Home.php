@@ -2,6 +2,7 @@
 $title = 'NFL-Picks';
 $page = 'Home';
 include 'header.php';
+
 ?>
 
 <?php

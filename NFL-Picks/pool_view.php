@@ -2,6 +2,7 @@
 $title = 'Pools';
 $page = 'Pools';
 include 'header.php';
+
 ?>
 <?php
 
